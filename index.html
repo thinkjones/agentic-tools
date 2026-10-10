@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI SDLC repo list</title>
+<meta name="description" content="A searchable list of starred GitHub repositories for building software with AI agents, with the data in CSV, TOML and JSON.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23131A3A'/%3E%3Ccircle cx='4' cy='8' r='2' fill='%23F0705A'/%3E%3Ccircle cx='8' cy='8' r='2' fill='%23FFF1B8'/%3E%3Ccircle cx='12' cy='8' r='2' fill='%239CC4FF'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #131A3A;
+  --raised: #1B2450;
+  --rule: #2C3668;
+  --text: #E9ECF8;
+  --muted: #A3ACD0;
+  --focus: #FFD86B;
+  --very-active: #9CC4FF;
+  --active: #FFF1B8;
+  --slowing: #FFB45E;
+  --dormant: #F0705A;
+  --archived: #7C84A6;
+  --serif: "Spectral", Georgia, serif;
+  --sans: "Schibsted Grotesk", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --strip-col: minmax(0, 22rem) 3rem minmax(0, 1fr);
+}
+* { box-sizing: border-box; }
+html { background: var(--ink); color: var(--text); font-family: var(--sans); font-size: 100%; line-height: 1.5; scroll-behavior: smooth; }
+body { margin: 0; }
+main, header, footer { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
+a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+button, input, select { font: inherit; color: inherit; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+header { padding-top: 4.5rem; padding-bottom: 2.5rem; }
+h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(2.75rem, 7vw, 5rem); line-height: 1.02; letter-spacing: -0.015em; margin: 0 0 1.25rem; }
+.lede { font-size: 1.25rem; max-width: 38rem; margin: 0 0 1.5rem; color: var(--muted); }
+.lede b { color: var(--text); font-weight: 500; }
+.files { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0; padding: 0; list-style: none; }
+
+h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: 1.75rem; margin: 0 0 0.25rem; }
+.hint { color: var(--muted); margin: 0 0 1.25rem; max-width: 40rem; }
+
+/* Lists index: one row per list, one dot per repo placed by stars */
+#lists { padding-top: 1.5rem; }
+.strip-head, .strip { display: grid; grid-template-columns: var(--strip-col); align-items: center; column-gap: 1rem; }
+.strip-head { color: var(--muted); font-size: 0.875rem; padding: 0 0.75rem 0.375rem; }
+.strip-head .scale, .strip .track { position: relative; height: 1.75rem; }
+.strip-head .scale span { position: absolute; bottom: 0; transform: translateX(-50%); }
+.strip { width: 100%; padding: 0 0.75rem; background: none; border: 0; border-top: 1px solid var(--rule); text-align: left; cursor: pointer; }
+.strip:hover { background: var(--raised); }
+.strip[aria-pressed="true"] { background: var(--raised); box-shadow: inset 3px 0 0 var(--text); }
+.strip .count { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.strip .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.track { background-image: linear-gradient(var(--rule), var(--rule)); background-size: 100% 1px; background-position: center; background-repeat: no-repeat; }
+.track i, .strip-head .scale i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--rule); }
+.strip-head .scale i { top: auto; height: 0; }
+.track b { position: absolute; top: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; opacity: 0.9; box-shadow: 0 0 0 1px var(--ink); }
+.strip:hover .track b, .strip[aria-pressed="true"] .track b { box-shadow: 0 0 0 1px var(--raised); }
+
+/* Filters */
+#filters { position: sticky; top: 0; z-index: 2; background: var(--ink); border-bottom: 1px solid var(--rule); margin-top: 3rem; padding: 1rem 0 0.75rem; }
+.row1 { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 0.75rem; }
+input[type="search"], select { background: var(--raised); border: 1px solid var(--rule); border-radius: 6px; padding: 0.625rem 0.75rem; min-height: 2.75rem; }
+input[type="search"] { width: 100%; }
+input::placeholder { color: var(--muted); opacity: 1; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: 1px solid var(--rule); border-radius: 999px; padding: 0.3125rem 0.75rem; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--raised); border-color: var(--muted); }
+.chip small { color: var(--muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+.dot { width: 0.625rem; height: 0.625rem; border-radius: 50%; flex: none; }
+#status { margin: 0 0 0 auto; color: var(--muted); }
+#clear { background: none; border: 0; padding: 0.3125rem 0; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+#clear[hidden] { display: none; }
+
+/* Results */
+#results { list-style: none; margin: 0; padding: 0 0 4rem; }
+.group { font-family: var(--serif); font-style: italic; font-size: 1.5rem; padding: 2.5rem 0 0.5rem; }
+.group span { font-family: var(--sans); font-style: normal; font-size: 1rem; color: var(--muted); margin-left: 0.5rem; }
+.repo { display: grid; grid-template-columns: 0.625rem minmax(0, 1fr) 5.5rem; column-gap: 1rem; padding: 0.875rem 0; border-top: 1px solid var(--rule); }
+.repo .dot { margin-top: 0.5rem; }
+.repo h3 { font-size: 1.0625rem; font-weight: 400; margin: 0; overflow-wrap: anywhere; }
+.repo h3 a { text-decoration: none; }
+.repo h3 a:hover strong { text-decoration: underline; text-underline-offset: 0.2em; }
+.repo h3 .owner { color: var(--muted); }
+.repo h3 strong { font-weight: 700; }
+.repo p { margin: 0.125rem 0 0; max-width: 46rem; color: var(--text); opacity: 0.86; overflow-wrap: anywhere; }
+.facts { display: flex; flex-wrap: wrap; gap: 0.125rem 1.25rem; margin: 0.375rem 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 0.875rem; }
+.stars { text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
+.stars small { display: block; color: var(--muted); font-weight: 400; font-size: 0.875rem; }
+.empty { padding: 3rem 0; color: var(--muted); }
+
+footer { border-top: 1px solid var(--rule); padding-top: 1.5rem; padding-bottom: 3rem; color: var(--muted); }
+
+@media (max-width: 44rem) {
+  header { padding-top: 2.5rem; }
+  .strip-head { display: none; }
+  .strip { grid-template-columns: minmax(0, 1fr) auto; padding: 0.5rem 0.75rem 0; }
+  .strip .track { grid-column: 1 / -1; }
+  .row1 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  select { width: 100%; }
+  .row1 label:first-child { grid-column: 1 / -1; }
+  #filters { position: static; }
+  #status { width: 100%; margin: 0; }
+  .repo { grid-template-columns: 0.625rem minmax(0, 1fr); }
+  .stars { grid-column: 2; text-align: left; margin-top: 0.375rem; }
+  .stars small { display: inline; margin-left: 0.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>AI SDLC repo list</h1>
+  <p class="lede" id="lede">Starred GitHub repositories for building software with AI agents, and the tools around them.</p>
+  <ul class="files">
+    <li><a href="starred_repos.csv" download>Download CSV</a></li>
+    <li><a href="starred_repos.toml" download>Download TOML</a></li>
+    <li><a href="starred_repos.json" download>Download JSON</a></li>
+    <li><a href="https://github.com/thinkjones/ai-sdlc-repo-list">View on GitHub</a></li>
+  </ul>
+</header>
+
+<main>
+  <section id="lists" aria-labelledby="lists-title">
+    <h2 id="lists-title">Lists</h2>
+    <p class="hint">Each dot is one repo, placed by its GitHub stars and coloured by how active it is. Choose a list to show only its repos.</p>
+    <div class="strip-head" aria-hidden="true"><span>List</span><span style="text-align:right">Repos</span><span class="scale" id="scale"></span></div>
+    <div id="strips"></div>
+  </section>
+
+  <section aria-labelledby="repos-title">
+    <h2 id="repos-title" class="sr">Repos</h2>
+    <form id="filters" role="search" onsubmit="return false">
+      <div class="row1">
+        <label><span class="sr">Search repos</span>
+          <input type="search" id="q" placeholder="Search names, descriptions and topics" autocomplete="off"></label>
+        <label><span class="sr">Language</span><select id="lang"></select></label>
+        <label><span class="sr">Sort by</span>
+          <select id="sort">
+            <option value="list">Sort by list</option>
+            <option value="stars">Most stars</option>
+            <option value="pushed">Recently pushed</option>
+            <option value="starred">Recently starred</option>
+            <option value="name">Name</option>
+          </select></label>
+      </div>
+      <div class="chips">
+        <span id="chips" style="display:contents"></span>
+        <button type="button" id="clear" hidden>Clear filters</button>
+        <p id="status" aria-live="polite"></p>
+      </div>
+    </form>
+    <ol id="results"><li class="empty">Loading the list…</li></ol>
+  </section>
+</main>
+
+<footer>
+  <p id="foot">Built from <a href="starred_repos.csv">starred_repos.csv</a>. Star counts and activity are a snapshot, not live.</p>
+</footer>
+
+<script>
+const ACTIVITY = ["Very active", "Active", "Slowing", "Dormant", "Archived"];
+const LOG_MAX = 5.7; // 10^5.7 is about 500k stars
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const slug = (a) => "var(--" + a.toLowerCase().replace(" ", "-") + ")";
+const pct = (stars) => (Math.min(Math.log10(stars + 1), LOG_MAX) / LOG_MAX) * 100;
+const shortStars = (n) => (n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n));
+const day = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const fmtDate = (iso) => day.format(new Date(iso + "T00:00:00Z"));
+const safeUrl = (u) => (/^https?:\/\//i.test(u || "") ? u : null);
+
+let repos = [], listNames = [];
+const state = { q: "", list: "", lang: "", sort: "list", act: new Set() };
+
+function readHash() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  state.q = p.get("q") || "";
+  state.list = listNames.includes(p.get("list")) ? p.get("list") : "";
+  state.lang = p.get("lang") || "";
+  state.sort = [...$("sort").options].some((o) => o.value === p.get("sort")) ? p.get("sort") : "list";
+  state.act = new Set((p.get("activity") || "").split(",").filter((a) => ACTIVITY.includes(a)));
+}
+
+function writeHash() {
+  const p = new URLSearchParams();
+  if (state.q) p.set("q", state.q);
+  if (state.list) p.set("list", state.list);
+  if (state.lang) p.set("lang", state.lang);
+  if (state.sort !== "list") p.set("sort", state.sort);
+  if (state.act.size) p.set("activity", [...state.act].join(","));
+  const hash = p.toString();
+  history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+}
+
+function matches(r, skip) {
+  if (skip !== "list" && state.list && r.list !== state.list) return false;
+  if (skip !== "act" && state.act.size && !state.act.has(r.activity)) return false;
+  if (state.lang && (r.language || "") !== state.lang) return false;
+  if (state.q) {
+    const hay = r._hay;
+    for (const term of state.q.toLowerCase().split(/\s+/)) if (term && !hay.includes(term)) return false;
+  }
+  return true;
+}
+
+const sorters = {
+  list: (a, b) => listNames.indexOf(a.list) - listNames.indexOf(b.list) || b.stars - a.stars,
+  stars: (a, b) => b.stars - a.stars,
+  pushed: (a, b) => b.last_push.localeCompare(a.last_push) || b.stars - a.stars,
+  starred: (a, b) => b.starred_on.localeCompare(a.starred_on) || b.stars - a.stars,
+  name: (a, b) => a.repo.localeCompare(b.repo, "en", { sensitivity: "base" }),
+};
+
+function repoRow(r, showList) {
+  const [owner, name] = r.repo.split("/");
+  const facts = [];
+  if (showList) facts.push(esc(r.list));
+  if (r.language) facts.push(esc(r.language));
+  if (r.license) facts.push(r.license === "NOASSERTION" ? "Other license" : esc(r.license));
+  if (r.last_release) facts.push("Release " + esc(r.last_release) + (r.release_date ? ", " + fmtDate(r.release_date) : ""));
+  facts.push("Pushed " + fmtDate(r.last_push));
+  facts.push("Starred " + fmtDate(r.starred_on));
+  const home = safeUrl(r.homepage);
+  if (home) facts.push(`<a href="${esc(home)}">Homepage</a>`);
+  return `<li class="repo">
+    <span class="dot" style="background:${slug(r.activity)}" title="${esc(r.activity)}"></span>
+    <div>
+      <h3><a href="${esc(safeUrl(r.url) || "#")}"><span class="owner">${esc(owner)}/</span><strong>${esc(name)}</strong></a><span class="sr">, ${esc(r.activity)}</span></h3>
+      ${r.description ? `<p>${esc(r.description)}</p>` : ""}
+      <ul class="facts">${facts.map((f) => `<li>${f}</li>`).join("")}</ul>
+    </div>
+    <div class="stars" title="${r.stars.toLocaleString("en")} stars, ${r.forks.toLocaleString("en")} forks">${shortStars(r.stars)}<small>stars</small></div>
+  </li>`;
+}
+
+function render() {
+  const shown = repos.filter((r) => matches(r)).sort(sorters[state.sort]);
+  const grouped = state.sort === "list";
+  let html = "", current = null;
+  for (const r of shown) {
+    if (grouped && r.list !== current) {
+      current = r.list;
+      html += `<li class="group">${esc(current)}<span>${shown.filter((x) => x.list === current).length}</span></li>`;
+    }
+    html += repoRow(r, !grouped);
+  }
+  $("results").innerHTML = html || `<li class="empty">No repos match these filters. Clear the filters to see all ${repos.length}.</li>`;
+  const filtered = state.q || state.list || state.lang || state.act.size;
+  $("status").textContent = filtered ? `Showing ${shown.length} of ${repos.length} repos` : `${repos.length} repos`;
+  $("clear").hidden = !filtered;
+
+  // Counts on each control reflect the other filters, so a zero means a dead end.
+  const perList = {}, perAct = {};
+  for (const r of repos) {
+    if (matches(r, "list")) perList[r.list] = (perList[r.list] || 0) + 1;
+    if (matches(r, "act")) perAct[r.activity] = (perAct[r.activity] || 0) + 1;
+  }
+  for (const b of document.querySelectorAll(".strip")) {
+    b.setAttribute("aria-pressed", String(b.dataset.list === state.list));
+    b.querySelector(".count").textContent = perList[b.dataset.list] || 0;
+  }
+  for (const b of document.querySelectorAll(".chip")) {
+    b.setAttribute("aria-pressed", String(state.act.has(b.dataset.act)));
+    b.querySelector("small").textContent = perAct[b.dataset.act] || 0;
+  }
+  $("q").value = state.q;
+  $("lang").value = state.lang;
+  $("sort").value = state.sort;
+  writeHash();
+}
+
+function buildControls() {
+  const ticks = [[2, "100"], [3, "1k"], [4, "10k"], [5, "100k"]];
+  $("scale").innerHTML = ticks.map(([p, l]) => `<span style="left:${(p / LOG_MAX) * 100}%">${l}</span>`).join("");
+  const tickLines = ticks.map(([p]) => `<i style="left:${(p / LOG_MAX) * 100}%"></i>`).join("");
+  $("strips").innerHTML = listNames.map((name) => {
+    const dots = repos.filter((r) => r.list === name)
+      .map((r) => `<b style="left:${pct(r.stars).toFixed(2)}%;background:${slug(r.activity)}"></b>`).join("");
+    return `<button type="button" class="strip" data-list="${esc(name)}" aria-pressed="false">
+      <span class="name">${esc(name)}</span><span class="count"></span>
+      <span class="track" aria-hidden="true">${tickLines}${dots}</span></button>`;
+  }).join("");
+
+  $("chips").innerHTML = ACTIVITY.map((a) =>
+    `<button type="button" class="chip" data-act="${a}" aria-pressed="false"><span class="dot" style="background:${slug(a)}"></span>${a} <small></small></button>`).join("");
+
+  const langs = {};
+  for (const r of repos) if (r.language) langs[r.language] = (langs[r.language] || 0) + 1;
+  $("lang").innerHTML = `<option value="">All languages</option>` + Object.entries(langs)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([l, n]) => `<option value="${esc(l)}">${esc(l)} (${n})</option>`).join("");
+
+  $("strips").addEventListener("click", (e) => {
+    const b = e.target.closest(".strip");
+    if (!b) return;
+    state.list = state.list === b.dataset.list ? "" : b.dataset.list;
+    render();
+    if (state.list) $("filters").scrollIntoView({ block: "start" });
+  });
+  $("chips").addEventListener("click", (e) => {
+    const b = e.target.closest(".chip");
+    if (!b) return;
+    state.act.has(b.dataset.act) ? state.act.delete(b.dataset.act) : state.act.add(b.dataset.act);
+    render();
+  });
+  $("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
+  $("lang").addEventListener("change", (e) => { state.lang = e.target.value; render(); });
+  $("sort").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
+  $("clear").addEventListener("click", () => {
+    Object.assign(state, { q: "", list: "", lang: "", act: new Set() });
+    render();
+  });
+  addEventListener("hashchange", () => { readHash(); render(); });
+}
+
+fetch("starred_repos.json")
+  .then((res) => { if (!res.ok) throw new Error(res.status); return res.json(); })
+  .then((data) => {
+    repos = data.repos;
+    for (const r of repos) {
+      r._hay = [r.repo, r.description, r.list, r.language, r.license, (r.topics || []).join(" ")].join(" ").toLowerCase();
+      if (!listNames.includes(r.list)) listNames.push(r.list);
+    }
+    const ai = repos.filter((r) => r.list.startsWith("AI")).length;
+    $("lede").innerHTML = `<b>${repos.length} starred GitHub repositories in ${listNames.length} lists.</b> ${ai} of them are tools for building software with AI agents; the rest are the terminal tools, infrastructure and references around them.`;
+    $("foot").insertAdjacentText("beforeend", ` Snapshot taken ${fmtDate(data.meta.snapshot)}.`);
+    buildControls();
+    readHash();
+    render();
+  })
+  .catch(() => {
+    $("results").innerHTML = `<li class="empty">The list could not be loaded. Reload the page, or open <a href="starred_repos.csv">starred_repos.csv</a> directly.</li>`;
+  });
+</script>
+</body>
+</html>
