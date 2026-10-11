@@ -18,7 +18,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CSV_PATH = ROOT / "starred_repos.csv"
-SITE_URL = "https://thinkjones.github.io/ai-sdlc-repo-list/"
+SITE_URL = "https://thinkjones.github.io/agentic-tools/"
 
 # CSV header -> key used in the TOML and JSON files.
 FIELDS = {
@@ -224,7 +224,7 @@ def write_hero(repos, groups):
     )
     body = f"""<g id="title-block" transform="translate(64 0)">
 {label(0, 78, "// thinkjones / starred repositories")}
-<text y="158" font-family="{SERIF}" font-size="72" font-weight="700" letter-spacing="-3" fill="{TEXT}">AI SDLC repo list</text>
+<text y="158" font-family="{SERIF}" font-size="72" font-weight="700" letter-spacing="-3" fill="{TEXT}">Agentic tools</text>
 <text y="208" font-size="25" fill="{TEXT}">{len(repos)} public repos sorted into {len(groups)} lists.</text>
 <text y="242" font-size="25" fill="{SECONDARY}">{ai} of them are tools for building software with AI agents.</text>
 </g>
@@ -242,7 +242,7 @@ def write_hero(repos, groups):
         + "."
     )
     (ROOT / "assets/readme/hero.svg").write_text(
-        svg(1200, 514, "AI SDLC repo list", desc, body), encoding="utf-8"
+        svg(1200, 514, "Agentic tools", desc, body), encoding="utf-8"
     )
 
 

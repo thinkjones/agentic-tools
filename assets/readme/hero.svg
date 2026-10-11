@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="514" viewBox="0 0 1200 514" role="img" aria-labelledby="title desc" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
-<title id="title">AI SDLC repo list</title>
+<title id="title">Agentic tools</title>
 <desc id="desc">315 starred repositories plotted by star count and coloured by activity: 211 very active, 17 active, 39 slowing, 34 dormant, 14 archived.</desc>
 <rect x="1" y="1" width="1198" height="512" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
 <g id="title-block" transform="translate(64 0)">
 <text x="0" y="78" text-anchor="start" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" letter-spacing="3" fill="#475569">// THINKJONES / STARRED REPOSITORIES</text>
-<text y="158" font-family="'Source Serif 4', Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-3" fill="#0f172a">AI SDLC repo list</text>
+<text y="158" font-family="'Source Serif 4', Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-3" fill="#0f172a">Agentic tools</text>
 <text y="208" font-size="25" fill="#0f172a">315 public repos sorted into 22 lists.</text>
 <text y="242" font-size="25" fill="#475569">193 of them are tools for building software with AI agents.</text>
 </g>

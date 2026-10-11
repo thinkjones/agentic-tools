@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="./assets/readme/hero.svg" width="100%" alt="AI SDLC repo list: every starred repo plotted by GitHub stars and coloured by how active it is">
+  <img src="./assets/readme/hero.svg" width="100%" alt="Agentic tools: every starred repo plotted by GitHub stars and coloured by how active it is">
 </p>
 
 <!-- summary:start -->
 315 public GitHub repositories I have starred, sorted into 22 lists. 193 of them are tools for building software with AI agents: frameworks, coding harnesses, orchestration, memory, skills and evals. The rest are the terminal tools, infrastructure and references around them. Snapshot taken 2026-10-10.
 <!-- summary:end -->
 
-**[Browse, search and filter the list on the site](https://thinkjones.github.io/ai-sdlc-repo-list/)**, or read it below. The same data is published as [CSV](./starred_repos.csv), [TOML](./starred_repos.toml) and [JSON](./starred_repos.json) for other tools to import.
+**[Browse, search and filter the list on the site](https://thinkjones.github.io/agentic-tools/)**, or read it below. The same data is published as [CSV](./starred_repos.csv), [TOML](./starred_repos.toml) and [JSON](./starred_repos.json) for other tools to import.
 
 <p align="center">
   <img src="./assets/readme/lists.svg" width="100%" alt="The lists as rows of dots, one dot per repo, placed by star count and coloured by activity">
@@ -61,7 +61,7 @@ Activity is set when the snapshot is taken, from the date of the last push.
 | [`starred_repos.toml`](./starred_repos.toml) | Config-driven tools. One `[[repos]]` table per repository. |
 | [`starred_repos.json`](./starred_repos.json) | Scripts and the site. Same keys as the TOML. |
 
-Each file is also served from the site, for example `https://thinkjones.github.io/ai-sdlc-repo-list/starred_repos.toml`.
+Each file is also served from the site, for example `https://thinkjones.github.io/agentic-tools/starred_repos.toml`.
 
 ```toml
 [[repos]]

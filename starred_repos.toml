@@ -4,7 +4,7 @@
 [meta]
 snapshot = 2026-10-10
 count = 315
-source = "https://thinkjones.github.io/ai-sdlc-repo-list/"
+source = "https://thinkjones.github.io/agentic-tools/"
 
 [[repos]]
 list = "AI · Agent Frameworks & SDKs"
