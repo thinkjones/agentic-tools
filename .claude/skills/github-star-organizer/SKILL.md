@@ -21,7 +21,7 @@ Round trip: GitHub stars → `starred_repos.csv` → TOML, JSON, README and site
    `python3 scripts/export_stars.py --decisions .gh-stars-organizer/decisions.json`
 
    Renaming two headings to the same name merges them. A split is a set of `assign` entries. A heading disappears once every repo is assigned away from it. Repeat until the export prints `No Unsorted repos.`
-4. **Build and check.** `python3 scripts/build.py`, then `python3 scripts/check_public.py`. The build fails if the TOML does not round-trip to the CSV.
+4. **Build and check.** `python3 scripts/build.py`, then `python3 scripts/check_public.py`. The build fails if the TOML does not round-trip to the CSV. `python3 scripts/sync_repo_meta.py` previews the GitHub description (it carries the repo and list counts) and topics from `.github/repo.toml`; run it with `--apply` when the user pushes.
 5. **Preview the upload.** `python3 scripts/organize_stars.py` is a dry run: it changes nothing on GitHub and prints the lists it would create or reuse, and the current lists that are not in the plan. It needs `uv` or `pipx` to fetch the gh-stars-organizer tool. Show the user that plan. Two things in it are expected:
    - Long headings appear under their shortened GitHub names from `SHORT_NAMES`.
    - Starred repos "not in starred_repos.toml" are the private ones the export left out. Leave them alone, and keep their names out of anything public.
@@ -55,4 +55,4 @@ Round trip: GitHub stars → `starred_repos.csv` → TOML, JSON, README and site
 - Running `--apply` straight after the export. Build first: the upload reads `starred_repos.toml`.
 - Treating a clean dry run as an upload. Nothing changes on GitHub without `--apply`.
 
-`export_stars.py` and `organize_stars.py` document their flags in `--help`. `build.py` and `check_public.py` take no flags and run immediately.
+`export_stars.py`, `organize_stars.py` and `sync_repo_meta.py` document their flags in `--help`. `build.py` and `check_public.py` take no flags and run immediately.

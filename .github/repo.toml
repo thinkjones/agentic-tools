@@ -1,0 +1,31 @@
+# The repo's description, homepage and topics on GitHub.
+# GitHub has no file it reads these from, so apply changes with:
+#   python3 scripts/sync_repo_meta.py
+# {count} and {lists} are filled in from starred_repos.toml.
+
+repo = "thinkjones/agentic-tools"
+homepage = "https://thinkjones.github.io/agentic-tools/"
+description = "Curated catalog of {count} GitHub repos for building software with AI agents, in {lists} lists: coding agents, skills, MCP, orchestration, memory. Searchable, filterable GitHub Pages site plus CSV, TOML and JSON exports. Stdlib Python build, vanilla JS, no dependencies."
+
+# 20 at most; lower-case letters, digits and hyphens.
+topics = [
+    "agentic-ai",
+    "agentic-coding",
+    "ai-agents",
+    "coding-agents",
+    "claude-code",
+    "agent-skills",
+    "mcp",
+    "llm",
+    "ai-tools",
+    "developer-tools",
+    "awesome-list",
+    "curated-list",
+    "github-stars",
+    "github-pages",
+    "static-site",
+    "dataset",
+    "toml",
+    "csv",
+    "python",
+]
