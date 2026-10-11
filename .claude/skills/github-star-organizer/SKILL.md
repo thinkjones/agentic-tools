@@ -45,7 +45,7 @@ Round trip: GitHub stars → `starred_repos.csv` → TOML, JSON, README and site
 
 - `--apply` moves repos out of the GitHub Lists they are in now. A current list that is not in the plan is left behind empty, or deleted with `--replace-lists`. Tell the user which lists that affects and get a yes to the exact flags.
 - `--apply` saves a backup under `.gh-stars-organizer/backups/` first; `--restore <file>` puts lists back.
-- Commit and push only when the user asks. Pushing publishes the site.
+- `main` is protected: commit to a branch and open a pull request, and only when the user asks. Merging publishes the site.
 - Never add a private repo to the CSV by hand; `check_public.py` must pass before a push.
 
 ## Common mistakes
