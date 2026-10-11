@@ -43,18 +43,21 @@ DATE_FIELDS = {"last_push", "release_date", "starred_on"}
 
 # Activity levels, busiest first, with the chart colour and README marker.
 ACTIVITY = [
-    ("Very active", "#9CC4FF", "🔵"),
-    ("Active", "#FFF1B8", "🟡"),
-    ("Slowing", "#FFB45E", "🟠"),
-    ("Dormant", "#F0705A", "🔴"),
-    ("Archived", "#7C84A6", "⚫"),
+    ("Very active", "#e85d26", "🟠"),
+    ("Active", "#19a0a6", "🔵"),
+    ("Slowing", "#ffb800", "🟡"),
+    ("Dormant", "#EB5570", "🔴"),
+    ("Archived", "#94a3b8", "⚫"),
 ]
 COLOUR = {name: colour for name, colour, _ in ACTIVITY}
 MARK = {name: mark for name, _, mark in ACTIVITY}
 
-INK, RAISED, RULE, TEXT, MUTED = "#131A3A", "#1B2450", "#2C3668", "#E9ECF8", "#A3ACD0"
-SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
-SERIF = "Georgia, 'Times New Roman', serif"
+# Four Signals 2.1 light surfaces. SVGs on GitHub cannot load web fonts, so
+# these are the system stand-ins for Source Serif 4, Inter and JetBrains Mono.
+PAGE, CARD, RULE, TEXT, SECONDARY, MUTED, ORANGE = "#f8fafc", "#ffffff", "#e2e8f0", "#0f172a", "#475569", "#94a3b8", "#e85d26"
+SANS = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+SERIF = "'Source Serif 4', Georgia, 'Times New Roman', serif"
+MONO = "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 
 
 def load():
@@ -174,7 +177,7 @@ def dots(repos, left, right, centre, radius, max_offset):
     ys = swarm(xs, radius, max_offset)
     return "\n".join(
         f'<circle cx="{x:.1f}" cy="{centre + y:.1f}" r="{radius}" fill="{COLOUR[r["activity"]]}"'
-        f' fill-opacity="0.9"/>'
+        f' stroke="{CARD}" stroke-width="1"/>'
         for r, x, y in zip(repos, xs, ys)
     )
 
@@ -185,9 +188,18 @@ def axis(left, right, top, bottom, label_y):
         x = left + (right - left) * power / LOG_MAX
         parts.append(
             f'<line x1="{x:.1f}" y1="{top}" x2="{x:.1f}" y2="{bottom}" stroke="{RULE}" stroke-width="1.5"/>'
-            f'<text x="{x:.1f}" y="{label_y}" text-anchor="middle" font-size="18" fill="{MUTED}">{label}</text>'
+            f'<text x="{x:.1f}" y="{label_y}" text-anchor="middle" font-family="{MONO}" font-size="18"'
+            f' fill="{SECONDARY}">{label}</text>'
         )
     return "\n".join(parts)
+
+
+def label(x, y, text, anchor="start"):
+    """Mono, upper-case section label."""
+    return (
+        f'<text x="{x}" y="{y}" text-anchor="{anchor}" font-family="{MONO}" font-size="18"'
+        f' letter-spacing="3" fill="{SECONDARY}">{escape(text.upper())}</text>'
+    )
 
 
 def svg(width, height, title, desc, body):
@@ -196,7 +208,8 @@ def svg(width, height, title, desc, body):
         f' viewBox="0 0 {width} {height}" role="img" aria-labelledby="title desc"'
         f' font-family="{SANS}">\n'
         f'<title id="title">{escape(title)}</title>\n<desc id="desc">{escape(desc)}</desc>\n'
-        f'<rect width="{width}" height="{height}" rx="26" fill="{INK}"/>\n{body}\n</svg>\n'
+        f'<rect x="1" y="1" width="{width - 2}" height="{height - 2}" rx="4" fill="{CARD}" stroke="{RULE}"'
+        f' stroke-width="2"/>\n{body}\n</svg>\n'
     )
 
 
@@ -204,24 +217,24 @@ def write_hero(repos, groups):
     counts = {name: sum(r["activity"] == name for r in repos) for name, _, _ in ACTIVITY}
     ai = sum(len(items) for name, items in groups.items() if name.startswith("AI"))
     legend = "\n".join(
-        f'<circle cx="0" cy="{i * 34 - 7}" r="8" fill="{colour}"/>'
-        f'<text x="22" y="{i * 34}" font-size="21" fill="{TEXT}">{name}</text>'
-        f'<text x="250" y="{i * 34}" font-size="21" fill="{MUTED}" text-anchor="end">{counts[name]}</text>'
+        f'<circle cx="0" cy="{i * 34 - 7}" r="7" fill="{colour}"/>'
+        f'<text x="22" y="{i * 34}" font-family="{MONO}" font-size="20" fill="{TEXT}">{name}</text>'
+        f'<text x="250" y="{i * 34}" font-family="{MONO}" font-size="20" fill="{SECONDARY}" text-anchor="end">{counts[name]}</text>'
         for i, (name, colour, _) in enumerate(ACTIVITY)
     )
     body = f"""<g id="title-block" transform="translate(64 0)">
-<text y="76" font-size="21" fill="{MUTED}">thinkjones / starred repositories</text>
-<text y="150" font-family="{SERIF}" font-size="68" fill="{TEXT}">AI SDLC repo list</text>
-<text y="200" font-size="25" fill="{TEXT}">{len(repos)} public repos sorted into {len(groups)} lists.</text>
-<text y="234" font-size="25" fill="{MUTED}">{ai} of them are tools for building software with AI agents.</text>
+{label(0, 78, "// thinkjones / starred repositories")}
+<text y="158" font-family="{SERIF}" font-size="72" font-weight="700" letter-spacing="-3" fill="{TEXT}">AI SDLC repo list</text>
+<text y="208" font-size="25" fill="{TEXT}">{len(repos)} public repos sorted into {len(groups)} lists.</text>
+<text y="242" font-size="25" fill="{SECONDARY}">{ai} of them are tools for building software with AI agents.</text>
 </g>
-<g id="legend" transform="translate(886 72)">
+<g id="legend" transform="translate(886 76)">
 {legend}
 </g>
 <g id="swarm">
-<text x="64" y="296" font-size="18" fill="{MUTED}">Each dot is one repo, placed by GitHub stars</text>
-{axis(64, 1136, 312, 452, 482)}
-{dots(repos, 64, 1136, 382, 5, 70)}
+{label(64, 304, "// each dot is one repo, placed by GitHub stars")}
+{axis(64, 1136, 320, 460, 490)}
+{dots(repos, 64, 1136, 390, 5, 70)}
 </g>"""
     desc = (
         f"{len(repos)} starred repositories plotted by star count and coloured by activity: "
@@ -229,12 +242,12 @@ def write_hero(repos, groups):
         + "."
     )
     (ROOT / "assets/readme/hero.svg").write_text(
-        svg(1200, 506, "AI SDLC repo list", desc, body), encoding="utf-8"
+        svg(1200, 514, "AI SDLC repo list", desc, body), encoding="utf-8"
     )
 
 
 def write_lists_chart(groups):
-    row_h, top = 34, 84
+    row_h, top = 34, 88
     left, right = 600, 1144
     height = top + row_h * len(groups) + 26
     rows = []
@@ -242,14 +255,15 @@ def write_lists_chart(groups):
         y = top + i * row_h
         rows.append(
             f'<text x="48" y="{y + 7}" font-size="20" fill="{TEXT}">{escape(name)}</text>'
-            f'<text x="556" y="{y + 7}" font-size="20" fill="{MUTED}" text-anchor="end">{len(items)}</text>'
+            f'<text x="556" y="{y + 7}" font-family="{MONO}" font-size="20" fill="{SECONDARY}" text-anchor="end">{len(items)}</text>'
             f'<line x1="{left}" y1="{y}" x2="{right}" y2="{y}" stroke="{RULE}" stroke-width="1"/>\n'
             + dots(items, left, right, y, 5, 9)
         )
     body = (
-        f'<text x="48" y="46" font-size="20" fill="{MUTED}">List</text>'
-        f'<text x="556" y="46" font-size="20" fill="{MUTED}" text-anchor="end">Repos</text>\n'
-        + axis(left, right, 58, height - 26, 46)
+        label(48, 48, "// list")
+        + label(556, 48, "repos", "end")
+        + "\n"
+        + axis(left, right, 62, height - 26, 48)
         + "\n"
         + "\n".join(rows)
     )
