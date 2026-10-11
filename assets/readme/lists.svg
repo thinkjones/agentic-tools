@@ -16,17 +16,17 @@
 <circle cx="1014.0" cy="93.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1010.8" cy="75.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1006.6" cy="93.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
-<circle cx="1005.8" cy="84.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="1005.8" cy="84.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="984.8" cy="75.6" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="982.1" cy="93.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
 <circle cx="978.4" cy="84.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="971.4" cy="75.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="968.4" cy="79.8" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="968.4" cy="79.8" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="966.6" cy="91.0" r="5" fill="#F0705A" fill-opacity="0.9"/>
 <circle cx="958.7" cy="84.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="938.9" cy="93.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="937.4" cy="84.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="905.2" cy="84.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="905.2" cy="84.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <text x="48" y="125" font-size="20" fill="#E9ECF8">AI · Agentic Engineering Methods</text><text x="556" y="125" font-size="20" fill="#A3ACD0" text-anchor="end">12</text><line x1="600" y1="118" x2="1144" y2="118" stroke="#2C3668" stroke-width="1"/>
 <circle cx="1122.3" cy="118.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1089.9" cy="118.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
@@ -64,7 +64,7 @@
 <circle cx="1023.6" cy="186.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1011.3" cy="186.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="999.9" cy="186.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="979.5" cy="193.1" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="979.5" cy="193.1" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="971.6" cy="186.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="949.3" cy="195.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="946.7" cy="186.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
@@ -83,14 +83,14 @@
 <circle cx="905.6" cy="263.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="905.2" cy="254.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="878.8" cy="254.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
-<circle cx="853.2" cy="254.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="853.2" cy="254.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="836.6" cy="254.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="726.2" cy="254.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <text x="48" y="295" font-size="20" fill="#E9ECF8">AI · LLM Platforms, Gateways &amp; Local AI</text><text x="556" y="295" font-size="20" fill="#A3ACD0" text-anchor="end">11</text><line x1="600" y1="288" x2="1144" y2="288" stroke="#2C3668" stroke-width="1"/>
 <circle cx="1102.2" cy="297.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1096.2" cy="279.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1095.5" cy="297.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="1095.1" cy="288.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
+<circle cx="1095.2" cy="288.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1065.3" cy="288.5" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1060.5" cy="279.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1056.6" cy="297.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
@@ -103,7 +103,7 @@
 <circle cx="1024.1" cy="331.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1021.8" cy="322.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1008.3" cy="322.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="997.2" cy="315.8" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="997.2" cy="315.8" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="993.9" cy="331.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="988.6" cy="322.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="952.2" cy="322.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
@@ -123,13 +123,13 @@
 <circle cx="1033.1" cy="356.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
 <circle cx="1023.9" cy="365.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1020.8" cy="356.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="1006.9" cy="356.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="1006.9" cy="356.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="992.8" cy="356.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="962.9" cy="356.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="947.7" cy="365.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="945.5" cy="356.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
 <circle cx="918.1" cy="347.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="918.0" cy="365.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="918.0" cy="365.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="913.8" cy="356.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="899.0" cy="356.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="882.8" cy="356.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
@@ -152,15 +152,15 @@
 <circle cx="979.6" cy="399.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="975.3" cy="381.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="975.0" cy="399.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="973.1" cy="381.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="973.1" cy="381.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="970.4" cy="399.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="969.9" cy="390.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="959.4" cy="399.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="959.1" cy="381.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="959.1" cy="381.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="958.6" cy="399.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
-<circle cx="954.7" cy="390.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="954.7" cy="390.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="944.8" cy="381.0" r="5" fill="#7C84A6" fill-opacity="0.9"/>
-<circle cx="943.8" cy="399.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="943.8" cy="399.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="943.8" cy="390.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="924.2" cy="384.1" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="915.8" cy="399.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
@@ -173,7 +173,7 @@
 <circle cx="1103.7" cy="424.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1073.7" cy="424.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1038.2" cy="424.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="1022.7" cy="424.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="1022.7" cy="424.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1000.1" cy="424.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="933.2" cy="424.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <text x="48" y="465" font-size="20" fill="#E9ECF8">AI · Skills, Plugins &amp; Registries</text><text x="556" y="465" font-size="20" fill="#A3ACD0" text-anchor="end">35</text><line x1="600" y1="458" x2="1144" y2="458" stroke="#2C3668" stroke-width="1"/>
@@ -204,9 +204,9 @@
 <circle cx="946.4" cy="467.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="943.7" cy="458.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="922.7" cy="458.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
-<circle cx="913.8" cy="467.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="913.8" cy="467.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="911.7" cy="458.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="784.1" cy="458.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
+<circle cx="784.6" cy="458.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="773.0" cy="458.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="756.8" cy="458.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="741.0" cy="458.0" r="5" fill="#F0705A" fill-opacity="0.9"/>
@@ -263,7 +263,7 @@
 <circle cx="628.7" cy="560.0" r="5" fill="#F0705A" fill-opacity="0.9"/>
 <text x="48" y="601" font-size="20" fill="#E9ECF8">Diagrams &amp; Architecture-as-Code</text><text x="556" y="601" font-size="20" fill="#A3ACD0" text-anchor="end">5</text><line x1="600" y1="594" x2="1144" y2="594" stroke="#2C3668" stroke-width="1"/>
 <circle cx="1068.8" cy="594.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="1047.5" cy="594.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
+<circle cx="1047.6" cy="594.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="988.1" cy="602.7" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
 <circle cx="982.0" cy="594.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="959.5" cy="594.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
@@ -290,7 +290,7 @@
 <circle cx="1017.1" cy="671.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1014.3" cy="662.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="998.1" cy="666.4" r="5" fill="#FFB45E" fill-opacity="0.9"/>
-<circle cx="988.5" cy="662.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="988.5" cy="662.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="975.4" cy="668.7" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="967.1" cy="662.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="914.9" cy="662.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
@@ -304,7 +304,7 @@
 <text x="48" y="737" font-size="20" fill="#E9ECF8">SaaS Building Blocks (UI, Forms, Grids)</text><text x="556" y="737" font-size="20" fill="#A3ACD0" text-anchor="end">13</text><line x1="600" y1="730" x2="1144" y2="730" stroke="#2C3668" stroke-width="1"/>
 <circle cx="1115.3" cy="730.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1039.9" cy="730.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="1017.5" cy="730.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="1017.5" cy="730.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1001.4" cy="721.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1000.3" cy="730.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="992.9" cy="738.5" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
@@ -320,14 +320,14 @@
 <circle cx="1069.5" cy="764.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1050.9" cy="769.6" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="1042.0" cy="764.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="1033.6" cy="755.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="1033.6" cy="755.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1032.8" cy="773.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="1029.9" cy="764.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="999.5" cy="764.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="999.5" cy="764.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="982.2" cy="773.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="980.3" cy="764.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="959.4" cy="764.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
-<circle cx="924.9" cy="773.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
+<circle cx="924.9" cy="773.0" r="5" fill="#9CC4FF" fill-opacity="0.9"/>
 <circle cx="922.7" cy="764.0" r="5" fill="#FFF1B8" fill-opacity="0.9"/>
 <circle cx="908.0" cy="764.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>
 <circle cx="699.4" cy="764.0" r="5" fill="#FFB45E" fill-opacity="0.9"/>

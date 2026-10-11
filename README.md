@@ -43,13 +43,13 @@
 
 ## Reading the activity column
 
-Activity is a label recorded when the snapshot was taken. The date ranges are what the last push dates in this snapshot show for each label.
+Activity is set when the snapshot is taken, from the date of the last push.
 
-| Label | Last push in this snapshot |
+| Label | Last push |
 | --- | --- |
-| 🔵 Very active | Within the month before the snapshot |
-| 🟡 Active | Within the three months before the snapshot |
-| 🟠 Slowing | Three to twelve months before |
+| 🔵 Very active | Within 31 days of the snapshot |
+| 🟡 Active | Within 92 days |
+| 🟠 Slowing | Within a year |
 | 🔴 Dormant | More than a year before |
 | ⚫ Archived | Any date; the repository is archived |
 
@@ -127,17 +127,17 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**google/adk-python**](https://github.com/google/adk-python)<br>An open-source, code-first Python toolkit for building, evaluating, and deploying sophisticated AI agents with flexibility and control. | 21.8k | Python | 🔵 Very active | 2026-10-10 |
 | [**camel-ai/owl**](https://github.com/camel-ai/owl)<br>🦉 OWL: Optimized Workforce Learning for General Multi-Agent Assistance in Real-World Task Automation | 20.2k | Python | 🔵 Very active | 2026-10-05 |
 | [**RightNow-AI/openfang**](https://github.com/RightNow-AI/openfang)<br>Open-source Agent Operating System | 18.2k | Rust | 🟠 Slowing | 2026-07-02 |
-| [**camel-ai/camel**](https://github.com/camel-ai/camel)<br>🐫 CAMEL: The first and the best multi-agent framework. Finding the Scaling Law of Agents. https://www.camel-ai.org | 17.9k | Python | 🟡 Active | 2026-10-05 |
+| [**camel-ai/camel**](https://github.com/camel-ai/camel)<br>🐫 CAMEL: The first and the best multi-agent framework. Finding the Scaling Law of Agents. https://www.camel-ai.org | 17.9k | Python | 🔵 Very active | 2026-10-05 |
 | [**VoltAgent/voltagent**](https://github.com/VoltAgent/voltagent)<br>AI Agent Engineering Platform built on an Open Source TypeScript AI Agent Framework | 10.8k | TypeScript | 🔵 Very active | 2026-09-28 |
 | [**GetBindu/Bindu**](https://github.com/GetBindu/Bindu)<br>Bindu: The identity, communication, and payments layer for AI agents. | 10.1k | Python | 🟡 Active | 2026-09-06 |
 | [**MervinPraison/PraisonAI**](https://github.com/MervinPraison/PraisonAI)<br>PraisonAI 🦞 — Hire a 24/7 AI Workforce. Stop writing boilerplate and start shipping autonomous self-improving agents that research, plan, code, and e… | 9.2k | Python | 🔵 Very active | 2026-10-10 |
 | [**2FastLabs/agent-squad**](https://github.com/2FastLabs/agent-squad)<br>Flexible and powerful framework for managing multiple AI agents and handling complex conversations | 7.8k | Python | 🔵 Very active | 2026-10-08 |
-| [**kyegomez/swarms**](https://github.com/kyegomez/swarms)<br>The Enterprise-Grade Multi-Agent Orchestration Framework. Website: https://swarms.ai | 7.2k | Python | 🟡 Active | 2026-10-10 |
+| [**kyegomez/swarms**](https://github.com/kyegomez/swarms)<br>The Enterprise-Grade Multi-Agent Orchestration Framework. Website: https://swarms.ai | 7.2k | Python | 🔵 Very active | 2026-10-10 |
 | [**InternLM/MindSearch**](https://github.com/InternLM/MindSearch)<br>🔍 An LLM-based Multi-agent Framework of Web Search Engine (like Perplexity.ai Pro and SearchGPT) | 6.9k | JavaScript | 🔴 Dormant | 2025-07-04 |
 | [**agentscope-ai/AgentTeams**](https://github.com/agentscope-ai/AgentTeams)<br>An open-source Collaborative Multi-Agent OS for transparent, human-in-the-loop task coordination via Matrix rooms. | 5.7k | Go | 🔵 Very active | 2026-10-10 |
 | [**SkyworkAI/DeepResearchAgent**](https://github.com/SkyworkAI/DeepResearchAgent)<br>DeepResearchAgent is a hierarchical multi-agent system designed not only for deep research tasks but also for general-purpose task solving. The frame… | 3.6k | Python | 🟠 Slowing | 2026-05-04 |
 | [**i-am-bee/beeai-framework**](https://github.com/i-am-bee/beeai-framework)<br>Build production-ready AI agents in both Python and Typescript. | 3.4k | Python | 🔵 Very active | 2026-10-10 |
-| [**langchain-ai/langgraph-swarm-py**](https://github.com/langchain-ai/langgraph-swarm-py)<br>For your multi-agent needs | 1.6k | Python | 🟡 Active | 2026-09-20 |
+| [**langchain-ai/langgraph-swarm-py**](https://github.com/langchain-ai/langgraph-swarm-py)<br>For your multi-agent needs | 1.6k | Python | 🔵 Very active | 2026-09-20 |
 
 <a id="list-02"></a>
 
@@ -147,7 +147,7 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | --- | ---: | --- | --- | --- |
 | [**obra/superpowers**](https://github.com/obra/superpowers)<br>An agentic skills framework &amp; software development methodology that works. | 297.2k | Shell | 🔵 Very active | 2026-10-10 |
 | [**garrytan/gstack**](https://github.com/garrytan/gstack)<br>Use Garry Tan's exact Claude Code setup: 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA | 135.8k | TypeScript | 🔵 Very active | 2026-10-10 |
-| [**karpathy/autoresearch**](https://github.com/karpathy/autoresearch)<br>AI agents running research on single-GPU nanochat training automatically | 97.6k | Python | 🟠 Slowing | 2026-03-26 |
+| [**karpathy/autoresearch**](https://github.com/karpathy/autoresearch)<br>AI agents running research on single-GPU nanochat training automatically | 97.7k | Python | 🟠 Slowing | 2026-03-26 |
 | [**shanraisshan/claude-code-best-practice**](https://github.com/shanraisshan/claude-code-best-practice)<br>from vibe coding to agentic engineering - practice makes claude perfect | 67.4k | HTML | 🔵 Very active | 2026-10-10 |
 | [**gsd-build/get-shit-done**](https://github.com/gsd-build/get-shit-done)<br>A light-weight and powerful meta-prompting, context engineering and spec-driven development system for Claude Code by TÂCHES. | 64.3k | JavaScript | ⚫ Archived | 2026-05-31 |
 | [**bmad-code-org/BMAD-METHOD**](https://github.com/bmad-code-org/BMAD-METHOD)<br>Breakthrough Method for Agile Ai Driven Development | 54.0k | Python | 🔵 Very active | 2026-10-10 |
@@ -180,12 +180,12 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**affaan-m/ECC**](https://github.com/affaan-m/ECC)<br>The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development for Claude Code, Codex, Openco… | 276.5k | JavaScript | 🔵 Very active | 2026-10-10 |
 | [**NousResearch/hermes-agent**](https://github.com/NousResearch/hermes-agent)<br>The agent that grows with you | 252.5k | Python | 🔵 Very active | 2026-10-10 |
 | [**deepseek-ai/deepseek-harness**](https://github.com/deepseek-ai/deepseek-harness)<br>DeepSeek Harness: Everything is a Plugin. | 247.0k | TypeScript | 🔵 Very active | 2026-10-09 |
-| [**anomalyco/opencode**](https://github.com/anomalyco/opencode)<br>The open source coding agent. | 212.5k | TypeScript | 🔵 Very active | 2026-10-10 |
+| [**anomalyco/opencode**](https://github.com/anomalyco/opencode)<br>The open source coding agent. | 212.6k | TypeScript | 🔵 Very active | 2026-10-10 |
 | [**anthropics/claude-code**](https://github.com/anthropics/claude-code)<br>Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, e… | 150.1k | TypeScript | 🔵 Very active | 2026-10-10 |
 | [**farion1231/cc-switch**](https://github.com/farion1231/cc-switch)<br>A cross-platform desktop All-in-One assistant for Claude Code, Codex, OpenCode, OpenClaw, Grok Build &amp; Hermes Agent. Only official website: ccswitch.… | 142.4k | Rust | 🔵 Very active | 2026-10-10 |
 | [**earendil-works/pi**](https://github.com/earendil-works/pi)<br>AI agent toolkit: unified LLM API, agent loop, TUI, coding agent CLI | 114.1k | TypeScript | 🔵 Very active | 2026-10-10 |
 | [**bytedance/deer-flow**](https://github.com/bytedance/deer-flow)<br>An open-source long-horizon SuperAgent harness that researches, codes, and creates. With the help of sandboxes, memories, tools, skill, subagents and… | 83.7k | Python | 🔵 Very active | 2026-10-10 |
-| [**Alishahryar1/free-claude-code**](https://github.com/Alishahryar1/free-claude-code)<br>Use Claude Code, Codex, VSCode, Pi, and OpenCode (and 6 other harnesses) for free (1.3B+ free tokens) from your terminal, app, IDE, or phone, and now… | 57.4k | Python | 🔵 Very active | 2026-10-10 |
+| [**Alishahryar1/free-claude-code**](https://github.com/Alishahryar1/free-claude-code)<br>Use Claude Code, Codex, VSCode, Pi, and OpenCode (and 6 other harnesses) for free (1.3B+ free tokens) from your terminal, app, IDE, or phone, and now… | 57.5k | Python | 🔵 Very active | 2026-10-10 |
 | [**herdrdev/herdr**](https://github.com/herdrdev/herdr)<br>the runtime your coding agents live on | 43.3k | Rust | 🔵 Very active | 2026-10-08 |
 | [**oraios/serena**](https://github.com/oraios/serena)<br>A powerful MCP toolkit for coding, providing semantic retrieval and editing capabilities - the IDE for your agent | 30.2k | Python | 🔵 Very active | 2026-10-09 |
 | [**langchain-ai/deepagents**](https://github.com/langchain-ai/deepagents)<br>The batteries-included agent harness. | 30.1k | Python | 🔵 Very active | 2026-10-10 |
@@ -193,7 +193,7 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**Fosowl/agenticSeek**](https://github.com/Fosowl/agenticSeek)<br>Fully Local Manus AI. No APIs, No $200 monthly bills. Enjoy an autonomous agent that thinks, browses the web, and code for the sole cost of electrici… | 27.5k | Python | 🔵 Very active | 2026-10-02 |
 | [**1jehuang/jcode**](https://github.com/1jehuang/jcode)<br>High performance coding agent harness written in rust | 20.4k | Rust | 🔵 Very active | 2026-10-10 |
 | [**eigent-ai/eigent**](https://github.com/eigent-ai/eigent)<br>Eigent: The Open Source Cowork Desktop - Local and Free Alternative to Claude Cowork and Codex | 15.5k | TypeScript | 🔵 Very active | 2026-10-09 |
-| [**anthropics/claude-code-action**](https://github.com/anthropics/claude-code-action) | 9.5k | TypeScript | 🟡 Active | 2026-10-09 |
+| [**anthropics/claude-code-action**](https://github.com/anthropics/claude-code-action) | 9.5k | TypeScript | 🔵 Very active | 2026-10-09 |
 | [**MoonshotAI/kimi-code**](https://github.com/MoonshotAI/kimi-code)<br>Kimi Code CLI — The Starting Point for Next-Gen Agents | 7.8k | TypeScript | 🔵 Very active | 2026-10-10 |
 | [**thirdlayerinc/autoagent**](https://github.com/thirdlayerinc/autoagent)<br>autonomous harness engineering | 4.6k | Python | 🟠 Slowing | 2026-04-03 |
 | [**composio-community/open-claude-cowork**](https://github.com/composio-community/open-claude-cowork)<br>Open Source version of Claude Cowork with 500+ SaaS app integrations | 4.3k | JavaScript | 🟠 Slowing | 2026-05-23 |
@@ -224,7 +224,7 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**hydra-db/open-glean**](https://github.com/hydra-db/open-glean)<br>An open-source AI platform for knowledge work. Connect your apps, find answers, and get work done. | 1.6k | TypeScript | 🔵 Very active | 2026-10-06 |
 | [**axoviq-ai/synthadoc**](https://github.com/axoviq-ai/synthadoc)<br>Synthadoc: An open-source LLM knowledge compilation engine that turns raw documents into structured, local-first wikis. A transparent, human-readable… | 1.6k | Python | 🔵 Very active | 2026-10-10 |
 | [**kytmanov/obsidian-llm-wiki-local**](https://github.com/kytmanov/obsidian-llm-wiki-local)<br>Karpathy’s LLM Wiki, 100% local with Ollama. Drop Markdown notes → AI extracts concepts → your Obsidian wiki auto-links and grows. Zero sharing. Your… | 834 | Python | 🟠 Slowing | 2026-05-26 |
-| [**Beever-AI/beever-atlas**](https://github.com/Beever-AI/beever-atlas)<br>Your First LLM-Wiki Conversation Knowledge Base | 449 | Python | 🟡 Active | 2026-09-10 |
+| [**Beever-AI/beever-atlas**](https://github.com/Beever-AI/beever-atlas)<br>Your First LLM-Wiki Conversation Knowledge Base | 449 | Python | 🔵 Very active | 2026-09-10 |
 | [**PixeroJan/obsidian-storyline**](https://github.com/PixeroJan/obsidian-storyline)<br>StoryLine transforms your Obsidian vault into a complete book planning and writing tool. Organize scenes, build characters, manage locations, track p… | 300 | TypeScript | 🔵 Very active | 2026-10-07 |
 | [**eliavamar/repositories-wiki**](https://github.com/eliavamar/repositories-wiki) | 20 | TypeScript | 🟠 Slowing | 2026-05-06 |
 
@@ -256,7 +256,7 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**gastownhall/beads**](https://github.com/gastownhall/beads)<br>Beads - A memory upgrade for your coding agent | 27.8k | Go | 🔵 Very active | 2026-10-10 |
 | [**mksglu/context-mode**](https://github.com/mksglu/context-mode)<br>Context window optimization for AI coding agents. Sandboxes tool output (98% reduction), persists session memory, and enforces routing across 17 plat… | 26.3k | TypeScript | 🔵 Very active | 2026-10-10 |
 | [**ccusage/ccusage**](https://github.com/ccusage/ccusage)<br>npx ccusage | 19.0k | Rust | 🔵 Very active | 2026-10-10 |
-| [**NevaMind-AI/memU**](https://github.com/NevaMind-AI/memU)<br>Personal memory across agents | 14.5k | Python | 🟡 Active | 2026-10-09 |
+| [**NevaMind-AI/memU**](https://github.com/NevaMind-AI/memU)<br>Personal memory across agents | 14.5k | Python | 🔵 Very active | 2026-10-09 |
 | [**EverMind-AI/EverOS**](https://github.com/EverMind-AI/EverOS)<br>One portable memory layer for every AI agent: local-first, Markdown-native, user-owned, and self-evolving across apps, tools, and workflows. | 13.4k | Python | 🔵 Very active | 2026-10-10 |
 | [**MemTensor/MemOS**](https://github.com/MemTensor/MemOS)<br>Self-evolving memory OS for LLM &amp; AI Agents: ultra-persistent memory, hybrid-retrieval, and cross-task skill reuse, with 35.24% token savings and Dee… | 11.8k | TypeScript | 🔵 Very active | 2026-10-10 |
 | [**Martian-Engineering/lossless-claw**](https://github.com/Martian-Engineering/lossless-claw)<br>Lossless Claw — LCM (Lossless Context Management) plugin for OpenClaw | 4.9k | TypeScript | 🔵 Very active | 2026-10-09 |
@@ -282,13 +282,13 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**OpenBMB/ChatDev**](https://github.com/OpenBMB/ChatDev)<br>ChatDev 2.0: Dev All through LLM-powered Multi-Agent Collaboration | 34.5k | Python | 🟡 Active | 2026-07-24 |
 | [**openai/symphony**](https://github.com/openai/symphony)<br>Symphony turns project work into isolated, autonomous implementation runs, allowing teams to manage work instead of supervising coding agents. | 27.6k | Elixir | 🔵 Very active | 2026-09-15 |
 | [**VoltAgent/awesome-claude-code-subagents**](https://github.com/VoltAgent/awesome-claude-code-subagents)<br>A collection of 100+ specialized Claude Code subagents covering a wide range of development use cases | 25.6k | Shell | 🔵 Very active | 2026-10-05 |
-| [**gastownhall/gastown**](https://github.com/gastownhall/gastown)<br>Gas Town - multi-agent workspace manager | 18.3k | Go | 🟡 Active | 2026-10-08 |
+| [**gastownhall/gastown**](https://github.com/gastownhall/gastown)<br>Gas Town - multi-agent workspace manager | 18.3k | Go | 🔵 Very active | 2026-10-08 |
 | [**OrchestratorInc/agent-orchestrator**](https://github.com/OrchestratorInc/agent-orchestrator)<br>Run and supervise teams of coding agents from planning to merge. Any harness (Claude code, codex, +25 more). Desktop, web, mobile, and cloud agents. | 13.1k | Go | 🔵 Very active | 2026-10-10 |
 | [**builderz-labs/mission-control**](https://github.com/builderz-labs/mission-control)<br>Self-hosted control plane for AI agents: dispatch tasks, review runs, track spend, and operate OpenClaw, Claude Code, Codex, and other runtimes. | 6.3k | TypeScript | 🔵 Very active | 2026-10-09 |
 | [**vijaythecoder/awesome-claude-agents**](https://github.com/vijaythecoder/awesome-claude-agents)<br>An orchestrated sub agent dev team powered by claude code | 4.4k |  | 🟠 Slowing | 2025-10-30 |
 | [**dataelement/Clawith**](https://github.com/dataelement/Clawith)<br>Your First AI Agents Company | 4.2k | Python | 🟡 Active | 2026-08-27 |
 | [**andyrewlee/awesome-agent-orchestrators**](https://github.com/andyrewlee/awesome-agent-orchestrators)<br>List of agent orchestrators | 2.2k |  | 🔵 Very active | 2026-10-10 |
-| [**crshdn/mission-control**](https://github.com/crshdn/mission-control)<br>The world's first Autonomous Product Engine (APE): AI agents research your market, generate features, and ship code as PRs. Convoy mode, crash recove… | 2.1k | TypeScript | 🟡 Active | 2026-09-16 |
+| [**crshdn/mission-control**](https://github.com/crshdn/mission-control)<br>The world's first Autonomous Product Engine (APE): AI agents research your market, generate features, and ship code as PRs. Convoy mode, crash recove… | 2.1k | TypeScript | 🔵 Very active | 2026-09-16 |
 | [**the-open-engine/zeroshot**](https://github.com/the-open-engine/zeroshot)<br>Runs coding agents as a graph: one agent implements, independent agents review, failures go to repair, and nothing ships until the checks pass. Works… | 1.9k | Rust | 🔵 Very active | 2026-10-10 |
 | [**gastownhall/gascity**](https://github.com/gastownhall/gascity)<br>Orchestration-builder SDK for multi-agent coding workflows | 1.4k | Go | 🔵 Very active | 2026-10-10 |
 | [**paperclipai/companies**](https://github.com/paperclipai/companies) | 918 |  | 🟠 Slowing | 2026-03-23 |
@@ -317,15 +317,15 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**openclaw/clawhub**](https://github.com/openclaw/clawhub)<br>Skill + Plugin Registry for OpenClaw | 9.5k | TypeScript | 🔵 Very active | 2026-10-09 |
 | [**HKUDS/ClawWork**](https://github.com/HKUDS/ClawWork)<br>"ClawWork: OpenClaw as Your AI Coworker - 💰 $15K earned in 11 Hours" | 8.6k | Python | 🟠 Slowing | 2026-03-03 |
 | [**openclaw/gogcli**](https://github.com/openclaw/gogcli)<br>Google Workspace in your terminal. | 8.5k | Go | 🔵 Very active | 2026-10-10 |
-| [**nullclaw/nullclaw**](https://github.com/nullclaw/nullclaw)<br>Fastest, smallest, and fully autonomous AI assistant infrastructure written in Zig | 8.1k | Zig | 🟡 Active | 2026-10-08 |
+| [**nullclaw/nullclaw**](https://github.com/nullclaw/nullclaw)<br>Fastest, smallest, and fully autonomous AI assistant infrastructure written in Zig | 8.1k | Zig | 🔵 Very active | 2026-10-08 |
 | [**ValueCell-ai/ClawX**](https://github.com/ValueCell-ai/ClawX)<br>ClawX is a desktop app that provides a graphical interface for OpenClaw AI agents. It turns CLI-based AI orchestration into a desktop experience with… | 7.6k | TypeScript | 🔵 Very active | 2026-09-30 |
 | [**ringhyacinth/Star-Office-UI**](https://github.com/ringhyacinth/Star-Office-UI)<br>A pixel office for your OpenClaw: turn invisible work states into a cozy little space with characters, daily notes, and guest agents. Code under MIT;… | 7.5k | HTML | 🟠 Slowing | 2026-03-11 |
 | [**0xNyk/awesome-hermes-agent**](https://github.com/0xNyk/awesome-hermes-agent)<br>Independent directory of useful skills, plugins, memory providers, tools, surfaces, and guides for Nous Research's open-source Hermes Agent. | 5.8k |  | 🔵 Very active | 2026-09-22 |
-| [**memovai/mimiclaw**](https://github.com/memovai/mimiclaw)<br>MimiClaw: Personal Agent on a $5 chip. No OS(Linux). No Node.js. No Mac mini. No Raspberry Pi. No VPS. Hardware agents OS. On device Muse. | 5.8k | C | 🟡 Active | 2026-10-04 |
+| [**memovai/mimiclaw**](https://github.com/memovai/mimiclaw)<br>MimiClaw: Personal Agent on a $5 chip. No OS(Linux). No Node.js. No Mac mini. No Raspberry Pi. No VPS. Hardware agents OS. On device Muse. | 5.8k | C | 🔵 Very active | 2026-10-04 |
 | [**Gen-Verse/OpenClaw-RL**](https://github.com/Gen-Verse/OpenClaw-RL)<br>OpenClaw-RL: Train any agent simply by talking | 5.7k | Python | 🟠 Slowing | 2026-05-23 |
-| [**linuxhsj/openclaw-zero-token**](https://github.com/linuxhsj/openclaw-zero-token)<br>OpenClaw: Use All Major AI Models NO API Token! Claude/ChatGPT/Gemini/DeepSeek/Doubao/Grok/Qwen/Manus/Kimi | 5.2k | TypeScript | 🟡 Active | 2026-09-24 |
+| [**linuxhsj/openclaw-zero-token**](https://github.com/linuxhsj/openclaw-zero-token)<br>OpenClaw: Use All Major AI Models NO API Token! Claude/ChatGPT/Gemini/DeepSeek/Doubao/Grok/Qwen/Manus/Kimi | 5.2k | TypeScript | 🔵 Very active | 2026-09-24 |
 | [**abhi1693/openclaw-mission-control**](https://github.com/abhi1693/openclaw-mission-control)<br>AI Agent Orchestration Dashboard - Manage AI agents, assign tasks, and coordinate multi-agent collaboration via OpenClaw Gateway. | 4.1k | TypeScript | ⚫ Archived | 2026-08-06 |
-| [**mergisi/awesome-openclaw-agents**](https://github.com/mergisi/awesome-openclaw-agents)<br>162 production-ready AI agent templates for OpenClaw. SOUL.md configs across 19 categories. Submit yours! | 4.0k | HTML | 🟡 Active | 2026-09-26 |
+| [**mergisi/awesome-openclaw-agents**](https://github.com/mergisi/awesome-openclaw-agents)<br>162 production-ready AI agent templates for OpenClaw. SOUL.md configs across 19 categories. Submit yours! | 4.0k | HTML | 🔵 Very active | 2026-09-26 |
 | [**TianyiDataScience/openclaw-control-center**](https://github.com/TianyiDataScience/openclaw-control-center)<br>Turn OpenClaw from a black box into a local control center you can see, trust, and control. | 4.0k | TypeScript | 🟠 Slowing | 2026-04-13 |
 | [**snarktank/antfarm**](https://github.com/snarktank/antfarm)<br>Build your agent team in OpenClaw with one command. | 2.5k | TypeScript | 🟠 Slowing | 2026-02-26 |
 | [**grp06/openclaw-studio**](https://github.com/grp06/openclaw-studio)<br>A clean web dashboard for OpenClaw. Connect your Gateway, manage agents, and ship faster. ⭐️ Star if you like it! | 2.0k | TypeScript | 🟠 Slowing | 2026-06-26 |
@@ -344,7 +344,7 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**microsoft/markitdown**](https://github.com/microsoft/markitdown)<br>Python tool for converting files and office documents to Markdown. | 189.4k | Python | 🔵 Very active | 2026-10-04 |
 | [**infiniflow/ragflow**](https://github.com/infiniflow/ragflow)<br>RAGFlow is a leading open-source Retrieval-Augmented Generation (RAG) engine that fuses cutting-edge RAG with Agent capabilities to create a superior… | 92.0k | Go | 🔵 Very active | 2026-10-10 |
 | [**VectifyAI/PageIndex**](https://github.com/VectifyAI/PageIndex)<br>📑 PageIndex: Document Index for Vectorless, Reasoning-based RAG | 39.0k | Python | 🔵 Very active | 2026-10-10 |
-| [**typesense/typesense**](https://github.com/typesense/typesense)<br>Open Source alternative to Algolia + Pinecone and an Easier-to-Use alternative to ElasticSearch ⚡ 🔍 ✨ Fast, typo tolerant, in-memory fuzzy Search Eng… | 26.8k | C++ | 🟡 Active | 2026-10-09 |
+| [**typesense/typesense**](https://github.com/typesense/typesense)<br>Open Source alternative to Algolia + Pinecone and an Easier-to-Use alternative to ElasticSearch ⚡ 🔍 ✨ Fast, typo tolerant, in-memory fuzzy Search Eng… | 26.8k | C++ | 🔵 Very active | 2026-10-09 |
 | [**Unstructured-IO/unstructured**](https://github.com/Unstructured-IO/unstructured)<br>Convert documents to structured data effortlessly. Unstructured is open-source ETL solution for transforming complex documents into clean, structured… | 15.6k | HTML | 🔵 Very active | 2026-10-10 |
 | [**spiceai/spiceai**](https://github.com/spiceai/spiceai)<br>Add a real-time analytics node to your operational database. Spice is a portable, accelerated SQL query, search, and LLM-inference engine in Rust for… | 3.1k | Rust | 🔵 Very active | 2026-10-10 |
 
@@ -354,10 +354,10 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 
 | Repo | Stars | Language | Activity | Last push |
 | --- | ---: | --- | --- | --- |
-| [**mattpocock/skills**](https://github.com/mattpocock/skills)<br>Skills for Real Engineers. Straight from my .agents directory. | 284.4k | Shell | 🔵 Very active | 2026-10-09 |
+| [**mattpocock/skills**](https://github.com/mattpocock/skills)<br>Skills for Real Engineers. Straight from my .agents directory. | 284.5k | Shell | 🔵 Very active | 2026-10-09 |
 | [**anthropics/skills**](https://github.com/anthropics/skills)<br>Public repository for Agent Skills | 180.3k | Python | 🔵 Very active | 2026-10-09 |
 | [**DietrichGebert/ponytail**](https://github.com/DietrichGebert/ponytail)<br>Makes your AI agent think like the laziest senior dev in the room. The best code is the code you never wrote. | 160.4k | JavaScript | 🔵 Very active | 2026-10-10 |
-| [**nextlevelbuilder/ui-ux-pro-max-skill**](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)<br>An AI skill that provides design intelligence for building professional UI/UX across multiple platforms. | 134.5k | Python | 🔵 Very active | 2026-10-09 |
+| [**nextlevelbuilder/ui-ux-pro-max-skill**](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)<br>An AI skill that provides design intelligence for building professional UI/UX across multiple platforms. | 134.5k | Python | 🔵 Very active | 2026-10-10 |
 | [**Graphify-Labs/graphify**](https://github.com/Graphify-Labs/graphify)<br>Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex,… | 125.3k | Python | 🔵 Very active | 2026-10-10 |
 | [**ComposioHQ/awesome-claude-skills**](https://github.com/ComposioHQ/awesome-claude-skills)<br>A curated list of awesome Claude Skills, resources, and tools for customizing Claude AI workflows | 76.8k | Python | 🔵 Very active | 2026-09-18 |
 | [**blader/humanizer**](https://github.com/blader/humanizer)<br>Agent skill that removes signs of AI-generated writing from text | 55.4k | Python | 🔵 Very active | 2026-09-28 |
@@ -381,9 +381,9 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**google-gemini/gemini-skills**](https://github.com/google-gemini/gemini-skills)<br>Skills for the Gemini API, SDK and model/agent interactions | 4.3k | Python | 🔵 Very active | 2026-10-06 |
 | [**microsoft/apm**](https://github.com/microsoft/apm)<br>Agent Package Manager | 4.0k | Python | 🔵 Very active | 2026-10-09 |
 | [**antonbabenko/terraform-skill**](https://github.com/antonbabenko/terraform-skill)<br>Terraform &amp; OpenTofu Skill for AI Agents - testing, modules, CI/CD, and production patterns | 2.4k |  | 🟠 Slowing | 2026-07-03 |
-| [**aipoch/medical-research-skills**](https://github.com/aipoch/medical-research-skills)<br>Hundreds of agent skills for medical research, including protocol design, data analysis, evidence insights, and academic writing. | 1.9k | Python | 🟡 Active | 2026-09-17 |
+| [**aipoch/medical-research-skills**](https://github.com/aipoch/medical-research-skills)<br>Hundreds of agent skills for medical research, including protocol design, data analysis, evidence insights, and academic writing. | 1.9k | Python | 🔵 Very active | 2026-09-17 |
 | [**oil-oil/beautify-github-readme**](https://github.com/oil-oil/beautify-github-readme)<br>整理并设计仓库 README，让项目价值、真实案例、安装方式与使用边界更容易理解。 | 1.8k | Python | 🔵 Very active | 2026-10-04 |
-| [**LeulAria/Aria-Icons**](https://github.com/LeulAria/Aria-Icons)<br>MCP server for 1M+ SVG icons | 84 | TypeScript | 🔵 Very active | 2026-10-08 |
+| [**LeulAria/Aria-Icons**](https://github.com/LeulAria/Aria-Icons)<br>MCP server for 1M+ SVG icons | 85 | TypeScript | 🔵 Very active | 2026-10-08 |
 | [**stakpak/paks**](https://github.com/stakpak/paks)<br>A Package Manager for the AgentSkills standard. Discover, Use, and Create AgentSkills with Claude Code, Codex, Gemini CLI, OpenCode and more | 64 | TypeScript | 🟠 Slowing | 2026-07-04 |
 | [**nwp/suno-song-creator-plugin**](https://github.com/nwp/suno-song-creator-plugin)<br>Suno Song Creator Skill | 43 | JavaScript | 🟠 Slowing | 2026-01-14 |
 | [**talvinder/carrot-ai-pm**](https://github.com/talvinder/carrot-ai-pm)<br>Carrot auto-writes specs and catches AI code drift. MCP server for Cursor that AST-validates every commit. | 29 | TypeScript | 🔴 Dormant | 2025-05-28 |
@@ -499,11 +499,11 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | --- | ---: | --- | --- | --- |
 | [**tw93/Mole**](https://github.com/tw93/Mole)<br>🐹 Keep your Mac clean, light, and running like new. Fast open-source CLI, plus a native Mac app. | 69.9k | Shell | 🔵 Very active | 2026-10-10 |
 | [**marktext/marktext**](https://github.com/marktext/marktext)<br>📝A simple and elegant markdown editor, available for Linux, macOS and Windows. | 62.4k | TypeScript | 🔵 Very active | 2026-10-10 |
-| [**cjpais/Handy**](https://github.com/cjpais/Handy)<br>A free, open source, and extensible speech-to-text application that works completely offline. | 33.4k | Rust | 🔵 Very active | 2026-10-10 |
+| [**cjpais/Handy**](https://github.com/cjpais/Handy)<br>A free, open source, and extensible speech-to-text application that works completely offline. | 33.5k | Rust | 🔵 Very active | 2026-10-10 |
 | [**nikitabobko/AeroSpace**](https://github.com/nikitabobko/AeroSpace)<br>AeroSpace is an i3-like tiling window manager for macOS | 23.4k | Swift | 🔵 Very active | 2026-10-02 |
 | [**chidiwilliams/buzz**](https://github.com/chidiwilliams/buzz)<br>Buzz transcribes and translates audio offline on your personal computer. Powered by OpenAI's Whisper. | 21.9k | Python | 🔵 Very active | 2026-10-02 |
 | [**alienator88/Pearcleaner**](https://github.com/alienator88/Pearcleaner)<br>A free, source-available and fair-code licensed mac app cleaner | 14.8k | Swift | 🟠 Slowing | 2026-06-22 |
-| [**mrkai77/Loop**](https://github.com/mrkai77/Loop)<br>Window management made elegant. | 11.8k | Swift | 🟡 Active | 2026-10-09 |
+| [**mrkai77/Loop**](https://github.com/mrkai77/Loop)<br>Window management made elegant. | 11.8k | Swift | 🔵 Very active | 2026-10-09 |
 | [**coteditor/CotEditor**](https://github.com/coteditor/CotEditor)<br>Lightweight Plain Text Editor for macOS | 8.6k | Swift | 🔵 Very active | 2026-10-09 |
 | [**momenbasel/PureMac**](https://github.com/momenbasel/PureMac)<br>Free, open-source macOS cleaner. CleanMyMac alternative with zero telemetry. Native SwiftUI, scheduled auto-cleaning, Xcode/Homebrew/system cache cle… | 7.0k | Swift | 🔵 Very active | 2026-10-10 |
 | [**guhcostan/mac-cleaner-cli**](https://github.com/guhcostan/mac-cleaner-cli)<br>Free macOS CLI to clean disk space — caches, logs, Homebrew, Xcode. Open-source alternative to CleanMyMac | 2.0k | TypeScript | 🔵 Very active | 2026-10-02 |
@@ -529,7 +529,7 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | --- | ---: | --- | --- | --- |
 | [**react/react**](https://github.com/react/react)<br>The library for web and native user interfaces. | 250.8k | JavaScript | 🔵 Very active | 2026-10-09 |
 | [**trpc/trpc**](https://github.com/trpc/trpc)<br>🧙‍♀️ Move Fast and Break Nothing. End-to-end typesafe APIs made easy. | 40.7k | TypeScript | 🔵 Very active | 2026-10-10 |
-| [**kriasoft/react-starter-kit**](https://github.com/kriasoft/react-starter-kit)<br>Modern React starter kit with Bun, TypeScript, Tailwind CSS, tRPC, Stripe, and Cloudflare Workers. Production-ready monorepo for building fast web ap… | 23.7k | TypeScript | 🟡 Active | 2026-10-05 |
+| [**kriasoft/react-starter-kit**](https://github.com/kriasoft/react-starter-kit)<br>Modern React starter kit with Bun, TypeScript, Tailwind CSS, tRPC, Stripe, and Cloudflare Workers. Production-ready monorepo for building fast web ap… | 23.7k | TypeScript | 🔵 Very active | 2026-10-05 |
 | [**wasp-lang/open-saas**](https://github.com/wasp-lang/open-saas)<br>A 100% free modern JS SaaS boilerplate (React, NodeJS, Prisma). Full-featured: Auth (email, google, github, slack, MS), Email sending, Background job… | 16.1k | MDX | 🔵 Very active | 2026-10-09 |
 | [**ag-grid/ag-grid**](https://github.com/ag-grid/ag-grid)<br>The best JavaScript Data Table for building Enterprise Applications. Supports React / Angular / Vue / Plain JavaScript. | 15.6k | TypeScript | 🔵 Very active | 2026-10-10 |
 | [**formbricks/formbricks**](https://github.com/formbricks/formbricks)<br>Open Source Qualtrics Alternative | 13.1k | TypeScript | 🔵 Very active | 2026-10-10 |
@@ -551,14 +551,14 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**jesseduffield/lazygit**](https://github.com/jesseduffield/lazygit)<br>simple terminal UI for git commands | 83.1k | Go | 🔵 Very active | 2026-10-10 |
 | [**jesseduffield/lazydocker**](https://github.com/jesseduffield/lazydocker)<br>The lazier way to manage everything docker | 53.1k | Go | 🟠 Slowing | 2026-04-19 |
 | [**sxyazi/yazi**](https://github.com/sxyazi/yazi)<br>💥 Blazing fast terminal file manager written in Rust, based on async I/O. | 42.7k | Rust | 🔵 Very active | 2026-10-10 |
-| [**aristocratos/btop**](https://github.com/aristocratos/btop)<br>A monitor of resources | 34.9k | C++ | 🟡 Active | 2026-10-07 |
+| [**aristocratos/btop**](https://github.com/aristocratos/btop)<br>A monitor of resources | 34.9k | C++ | 🔵 Very active | 2026-10-07 |
 | [**fish-shell/fish-shell**](https://github.com/fish-shell/fish-shell)<br>The user-friendly command line shell. | 34.3k | Rust | 🔵 Very active | 2026-10-06 |
 | [**atuinsh/atuin**](https://github.com/atuinsh/atuin)<br>✨ Making your shell magical | 32.0k | Rust | 🔵 Very active | 2026-10-10 |
-| [**lra/mackup**](https://github.com/lra/mackup)<br>Backup and keep your application settings in sync. | 15.3k | Python | 🟡 Active | 2026-09-09 |
+| [**lra/mackup**](https://github.com/lra/mackup)<br>Backup and keep your application settings in sync. | 15.3k | Python | 🔵 Very active | 2026-09-09 |
 | [**tilt-dev/tilt**](https://github.com/tilt-dev/tilt)<br>Define your dev environment as code. For microservice apps on Kubernetes. | 10.1k | Go | 🔵 Very active | 2026-10-03 |
 | [**anchore/syft**](https://github.com/anchore/syft)<br>CLI tool and library for generating a Software Bill of Materials from container images and filesystems | 9.7k | Go | 🔵 Very active | 2026-10-09 |
 | [**dotenvx/dotenvx**](https://github.com/dotenvx/dotenvx)<br>a secure dotenv—from the creator of `dotenv` | 5.8k | JavaScript | 🔵 Very active | 2026-10-09 |
-| [**facebookincubator/below**](https://github.com/facebookincubator/below)<br>A time traveling resource monitor for modern Linux systems | 2.5k | Rust | 🟡 Active | 2026-10-09 |
+| [**facebookincubator/below**](https://github.com/facebookincubator/below)<br>A time traveling resource monitor for modern Linux systems | 2.5k | Rust | 🔵 Very active | 2026-10-09 |
 | [**tamasfe/taplo**](https://github.com/tamasfe/taplo)<br>A TOML toolkit written in Rust | 2.4k | Rust | 🟡 Active | 2026-07-28 |
 | [**configu/configu**](https://github.com/configu/configu)<br>Open-source ConfigOps infrastructure ⚙️ | 1.7k | TypeScript | 🟠 Slowing | 2026-02-17 |
 | [**maximgorbatyuk/repolyze**](https://github.com/maximgorbatyuk/repolyze) | 10 | Rust | 🟠 Slowing | 2026-04-15 |
@@ -583,13 +583,28 @@ Repos are ordered by stars within each list. Descriptions longer than 150 charac
 | [**synergycodes/workflowbuilder**](https://github.com/synergycodes/workflowbuilder)<br>Workflow Builder - Apache 2.0 React SDK for embedding visual workflow editors. Drag-and-drop workflow builder UI with a reference back-end and an exe… | 394 | TypeScript | 🔵 Very active | 2026-10-09 |
 <!-- lists:end -->
 
-## Rebuild
+## Organise your own stars into these lists
 
-`starred_repos.csv` is the source of truth. After changing it, regenerate the TOML, the JSON, both charts and the tables in this README:
+`scripts/organize_stars.py` files your GitHub stars into [GitHub Lists](https://github.com/stars) that match the `list` key in `starred_repos.toml`. It drives [gh-stars-organizer](https://github.com/vins13pattar/gh-stars-organizer), which syncs the stars, creates the lists and assigns the repos; the script supplies the list for each repo, so no LLM key is needed.
 
 ```bash
-python3 scripts/build.py
+python3 scripts/organize_stars.py                           # dry run: print the plan
+gh auth refresh -s user                                     # once: lets gh edit lists
+python3 scripts/organize_stars.py --apply --replace-lists   # make the changes
 ```
+
+Each repo ends up in exactly one list, and leaves any list it is in today. GitHub allows 32 lists per account, so `--replace-lists` deletes current lists that are not in the plan to make room. Your current lists are saved to `.gh-stars-organizer/backups/` first, and `--restore <file>` puts them back. Add `--public` to make the new lists public; the tool creates them private. List names over GitHub's 32-character limit are shortened, with the full name kept as the list description.
+
+## Rebuild
+
+`starred_repos.csv` is the source of truth. Refresh it from your GitHub stars, then regenerate the TOML, the JSON, both charts and the tables in this README:
+
+```bash
+python3 scripts/export_stars.py   # stars -> starred_repos.csv, keeping each repo's list
+python3 scripts/build.py          # CSV -> everything else
+```
+
+The export leaves out private repos and files new stars under `Unsorted` until you assign them; `python3 scripts/export_stars.py --help` shows how. In Claude Code, the `github-star-organizer` skill in `.claude/skills/` runs the whole round trip, including suggesting list headings.
 
 The build needs Python 3.11 or later and nothing else. Before publishing a new CSV, confirm that every repo in it is public (this needs the `gh` CLI, signed in):
 
