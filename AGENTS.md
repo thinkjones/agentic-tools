@@ -8,7 +8,7 @@ This repo publishes a curated list of GitHub repos for building software with AI
 - `scripts/build.py` generates everything else from the CSV: `starred_repos.toml`, `starred_repos.json`, the charts in `assets/readme/`, and the blocks in `README.md` between `<!-- name:start -->` and `<!-- name:end -->` markers.
 - `index.html` is a single hand-written file with no build step. It loads `starred_repos.json` in the browser.
 - `scripts/organize_stars.py` uploads the lists to the maintainer's GitHub Lists. `scripts/sync_repo_meta.py` sets the repo description and topics from `.github/repo.toml`.
-- `.github/workflows/refresh-stats.yml` runs `export_stars.py --refresh` and the build every Monday and opens a `refresh-stats` pull request. It only updates stats; it never adds, removes or re-files repos.
+- `.github/workflows/refresh-stats.yml` runs `export_stars.py --refresh` and the build every Monday and opens a `refresh-stats` pull request. It only updates stats and drops repos that are no longer public; it never adds or re-files repos.
 - `.gh-stars-organizer/` is git-ignored scratch (decisions, cache, list backups).
 
 ## Commands
