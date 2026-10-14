@@ -15,6 +15,11 @@ or in several. Change lists with a decisions file:
     python3 scripts/export_stars.py                              # refresh the CSV
     python3 scripts/export_stars.py --decisions decisions.json   # refresh and re-file
     python3 scripts/export_stars.py --output /tmp/preview.csv    # leave the CSV alone
+    python3 scripts/export_stars.py --refresh                    # update stats only
+
+--refresh updates the stats of the repos already in the CSV and keeps their
+lists. It reads no stars or lists, so it works with any token, such as the
+GitHub Actions token used by the weekly refresh workflow.
 
 Needs Python 3.11+ and the gh CLI, signed in.
 """
@@ -38,26 +43,25 @@ COLUMNS = [
     "Release Date", "License", "Language", "Homepage", "Topics", "Description", "Starred On",
 ]  # fmt: skip
 
+REPO_FIELDS = """
+  nameWithOwner url visibility stargazerCount forkCount isArchived pushedAt
+  description homepageUrl
+  latestRelease { tagName publishedAt }
+  licenseInfo { spdxId }
+  primaryLanguage { name }
+  repositoryTopics(first: 20) { nodes { topic { name } } }
+"""
 STARS_QUERY = """
 query($after: String) {
   viewer {
     starredRepositories(first: 100, after: $after, orderBy: {field: STARRED_AT, direction: DESC}) {
-      edges {
-        starredAt
-        node {
-          nameWithOwner url visibility stargazerCount forkCount isArchived pushedAt
-          description homepageUrl
-          latestRelease { tagName publishedAt }
-          licenseInfo { spdxId }
-          primaryLanguage { name }
-          repositoryTopics(first: 20) { nodes { topic { name } } }
-        }
-      }
+      edges { starredAt node { %s } }
       pageInfo { hasNextPage endCursor }
     }
   }
 }
-"""
+""" % REPO_FIELDS
+BATCH = 50
 LISTS_QUERY = """
 query($after: String) {
   viewer {
@@ -92,7 +96,7 @@ def fail(message):
     sys.exit(f"error: {message}")
 
 
-def gql(query, **variables):
+def gql(query, allow_missing=False, **variables):
     for attempt in range(3):
         proc = subprocess.run(
             ["gh", "api", "graphql", "--input", "-"],
@@ -107,8 +111,9 @@ def gql(query, **variables):
         payload = json.loads(proc.stdout)
     except json.JSONDecodeError:
         fail(f"gh api graphql failed: {proc.stderr.strip() or proc.stdout.strip()}")
-    if payload.get("errors"):
-        fail("GitHub API: " + "; ".join(e.get("message", str(e)) for e in payload["errors"]))
+    errors = [e for e in payload.get("errors", []) if not (allow_missing and e.get("type") == "NOT_FOUND")]
+    if errors:
+        fail("GitHub API: " + "; ".join(e.get("message", str(e)) for e in errors))
     return payload["data"]
 
 
@@ -120,6 +125,23 @@ def fetch_stars():
         if not page["pageInfo"]["hasNextPage"]:
             return edges
         after = page["pageInfo"]["endCursor"]
+
+
+def fetch_listed(previous):
+    """Fetch the repos already in the CSV, as star edges carrying their CSV key and star date."""
+    keys = list(previous)
+    edges = []
+    for start in range(0, len(keys), BATCH):
+        batch = keys[start : start + BATCH]
+        fields = "".join(
+            f"r{i}: repository(owner: {json.dumps(owner)}, name: {json.dumps(name)}) {{ {REPO_FIELDS} }} "
+            for i, (owner, name) in enumerate(previous[key]["Repo"].split("/", 1) for key in batch)
+        )
+        data = gql(f"query {{ {fields} }}", allow_missing=True)
+        for i, key in enumerate(batch):
+            if data.get(f"r{i}"):
+                edges.append({"key": key, "starredAt": previous[key]["Starred On"], "node": data[f"r{i}"]})
+    return edges
 
 
 def fetch_memberships():
@@ -179,18 +201,21 @@ def to_row(edge, today):
     }
 
 
-def previous_lists(path):
+def previous_rows(path):
     if not path.exists():
         return {}
     with path.open(encoding="utf-8-sig", newline="") as f:
-        return {row["Repo"].lower(): row["Proposed List"] for row in csv.DictReader(f)}
+        return {row["Repo"].lower(): row for row in csv.DictReader(f)}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--decisions", metavar="FILE", help="JSON file with list renames and repo assignments")
     parser.add_argument("--output", metavar="FILE", type=Path, default=CSV_PATH, help="write here instead of starred_repos.csv")
+    parser.add_argument("--refresh", action="store_true", help="update the stats of the repos already in the CSV, keeping their lists")
     args = parser.parse_args()
+    if args.refresh and args.decisions:
+        fail("--refresh keeps every list as it is; run --decisions without it")
 
     decisions = json.loads(Path(args.decisions).read_text(encoding="utf-8")) if args.decisions else {}
     rename = decisions.get("rename", {})
@@ -199,18 +224,21 @@ def main():
     if unknown_keys:
         fail(f"unknown keys in decisions file: {', '.join(sorted(unknown_keys))}")
 
-    previous = previous_lists(CSV_PATH)
-    memberships = fetch_memberships()
-    edges = fetch_stars()
+    previous = {key: row["Proposed List"] for key, row in previous_rows(CSV_PATH).items()}
+    if args.refresh:
+        memberships, edges = {}, fetch_listed(previous_rows(CSV_PATH))
+    else:
+        memberships, edges = fetch_memberships(), fetch_stars()
     today = datetime.now(timezone.utc).date()
 
-    rows, hidden, added = [], 0, []
+    rows, keys, hidden, added = [], set(), 0, []
     for edge in edges:
         if edge["node"]["visibility"] != "PUBLIC":
             hidden += 1
             continue
         row = to_row(edge, today)
-        key = row["Repo"].lower()
+        key = edge.get("key", row["Repo"].lower())  # a refreshed repo keeps its CSV key if renamed
+        keys.add(key)
         if key in previous:
             current = previous[key]
         else:
@@ -223,8 +251,7 @@ def main():
     if assign:
         fail("decisions file assigns repos that are not public stars: " + ", ".join(sorted(assign)))
 
-    starred = {row["Repo"].lower() for row in rows}
-    dropped = sorted(name for name in previous if name not in starred)
+    dropped = sorted(name for name in previous if name not in keys)
     rows.sort(key=lambda r: (r["Proposed List"] == UNSORTED, r["Proposed List"].lower(), -r["Stars"]))
 
     with args.output.open("w", encoding="utf-8-sig", newline="") as f:
@@ -245,7 +272,7 @@ def main():
             if row["Repo"] in added:
                 print(f"  {row['Repo']}  [{row['Proposed List']}]  {row['Description'][:90]}")
     if dropped:
-        print(f"\n{len(dropped)} repos were in the CSV and are no longer public stars (removed):")
+        print(f"\n{len(dropped)} repos were in the CSV and are no longer public{'' if args.refresh else ' stars'} (removed):")
         print("  " + "\n  ".join(dropped))
     if counts.get(UNSORTED):
         print(f"\n{counts[UNSORTED]} repos are {UNSORTED}. Assign them with --decisions before publishing.")

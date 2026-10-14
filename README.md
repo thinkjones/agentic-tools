@@ -657,4 +657,6 @@ The build needs Python 3.11 or later and nothing else. Before publishing a new C
 python3 scripts/check_public.py
 ```
 
+A weekly GitHub Action ([`.github/workflows/refresh-stats.yml`](./.github/workflows/refresh-stats.yml)) runs `python3 scripts/export_stars.py --refresh` and the build every Monday, then opens a pull request with the updated stars, forks, activity and releases. It keeps every repo in its list; new stars are still filed by hand.
+
 The repo's description, homepage and topics on GitHub live in [`.github/repo.toml`](./.github/repo.toml). GitHub does not read them from a file, so after a build that changes the counts, or after editing that file, run `python3 scripts/sync_repo_meta.py --apply`.
