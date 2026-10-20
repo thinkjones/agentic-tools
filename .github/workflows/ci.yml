@@ -34,6 +34,8 @@ jobs:
 
       - name: Authenticate gh with GITHUB_TOKEN
         run: |
+          # GITHUB_TOKEN is an installation token; gh auth's viewer lookup fails
+          # for that. The credential is still active via the GH_TOKEN env var.
           echo "$GH_TOKEN" | gh auth login --with-token \
             || echo "::warning::gh auth login did not resolve the token owner; gh api will use the GH_TOKEN environment variable"
 
