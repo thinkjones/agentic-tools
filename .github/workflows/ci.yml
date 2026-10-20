@@ -1,0 +1,44 @@
+# PR-triggered publish gate for agentic-tools. Runs scripts/build.py (TOML
+# round-trip) and scripts/check_public.py (visibility) on every non-draft pull
+# request so a private or otherwise non-public repository addition is caught
+# before it reaches main. The Monday refresh-stats.yml schedule still owns the
+# push-to-main side; this workflow only covers PRs.
+name: PR publish gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate CSV + check public
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Authenticate gh with GITHUB_TOKEN
+        run: |
+          echo "$GH_TOKEN" | gh auth login --with-token \
+            || echo "::warning::gh auth login did not resolve the token owner; gh api will use the GH_TOKEN environment variable"
+
+      - name: Build (TOML round-trip)
+        run: python3 scripts/build.py
+
+      - name: Check every repo is public
+        run: python3 scripts/check_public.py
