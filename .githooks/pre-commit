@@ -22,9 +22,8 @@
 set -uo pipefail
 
 # Staged paths that make the gate fire. README.md is deliberately absent: it
-# is half generated and half narrative prose, and it appears on the skip
-# list. It is still compared for drift whenever the gate fires for another
-# reason.
+# is half generated and half narrative prose, so it is compared for drift
+# (see DERIVED_PATHS below) rather than used as a trigger.
 GATED_PATHS=(
   starred_repos.csv
   starred_repos.toml
@@ -46,7 +45,7 @@ DERIVED_PATHS=(
 )
 
 # The command the refusal message prints verbatim, so it can be copied.
-REMEDY='python3 scripts/build.py && git add starred_repos.toml starred_repos.json assets/readme/hero.svg assets/readme/lists.svg README.md'
+REMEDY="python3 scripts/build.py && git add ${DERIVED_PATHS[*]}"
 
 SCRATCH=""
 

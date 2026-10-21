@@ -48,6 +48,8 @@ The gate fires when the staged paths include any of:
 - `scripts/build.py`
 - `scripts/check_public.py`
 
+That list mirrors the `GATED_PATHS` array in `.githooks/pre-commit`; change one and you must change the other.
+
 That list is the trigger set. `README.md` is compared for drift whenever the gate fires for one of those paths, but it is not itself a trigger, so a commit that stages only `README.md` invokes neither script.
 
 The cost is about 0.1s for `build.py` and about 15s for `check_public.py` on the current 344-repo CSV, and it is paid only by commits that touch the gated files. A documentation-only commit invokes neither script.
