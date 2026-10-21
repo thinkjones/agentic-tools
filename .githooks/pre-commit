@@ -1,0 +1,174 @@
+#!/usr/bin/env bash
+#
+# Pre-commit gate for agentic-tools.
+#
+# Enable it per clone with:
+#
+#   git config core.hooksPath .githooks
+#
+# A commit that stages none of the gated files is not intercepted. A commit
+# that stages one of them runs the repository's two gate scripts and is
+# refused when either of them fails:
+#
+#   scripts/build.py        runs against a scratch copy of the index, so the
+#                           working tree is never written to, and the derived
+#                           files it produces are compared with the staged ones.
+#   scripts/check_public.py runs against the working tree, which step 2 has
+#                           already proven to hold the same CSV as the index.
+#
+# Nothing is piped through head, grep or a captured variable: each script's
+# output reaches the terminal exactly as it would from a manual run.
+
+set -uo pipefail
+
+# Staged paths that make the gate fire. README.md is deliberately absent: it
+# is half generated and half narrative prose, so it is compared for drift
+# (see DERIVED_PATHS below) rather than used as a trigger.
+GATED_PATHS=(
+  starred_repos.csv
+  starred_repos.toml
+  starred_repos.json
+  assets/readme/hero.svg
+  assets/readme/lists.svg
+  scripts/build.py
+  scripts/check_public.py
+)
+
+# Files the generator owns, compared against the generator's output on every
+# gated commit. README.md is one of them.
+DERIVED_PATHS=(
+  starred_repos.toml
+  starred_repos.json
+  assets/readme/hero.svg
+  assets/readme/lists.svg
+  README.md
+)
+
+# The command the refusal message prints verbatim, so it can be copied.
+REMEDY="python3 scripts/build.py && git add ${DERIVED_PATHS[*]}"
+
+SCRATCH=""
+
+cleanup() {
+  if [ -n "$SCRATCH" ] && [ -d "$SCRATCH" ]; then
+    rm -rf "$SCRATCH"
+  fi
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+trap 'exit 129' HUP
+
+refuse() {
+  printf '\npre-commit: %s\n' "$1" >&2
+  exit 1
+}
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+if [ -z "$ROOT" ] || [ ! -d "$ROOT" ]; then
+  refuse "not inside a git working tree."
+fi
+cd "$ROOT" || refuse "cannot enter the repository root at $ROOT."
+
+# --- 1. Bail out when nothing gated is staged. -------------------------------
+
+STAGED="$(git diff --cached --name-only)"
+GATE_FIRES=0
+while IFS= read -r PATHNAME; do
+  [ -n "$PATHNAME" ] || continue
+  for GATED in "${GATED_PATHS[@]}"; do
+    if [ "$PATHNAME" = "$GATED" ]; then
+      GATE_FIRES=1
+      break
+    fi
+  done
+  if [ "$GATE_FIRES" -eq 1 ]; then
+    break
+  fi
+done <<EOF
+$STAGED
+EOF
+
+if [ "$GATE_FIRES" -eq 0 ]; then
+  exit 0
+fi
+
+# --- 2. Refuse a half-staged CSV before running anything. --------------------
+
+git diff --quiet -- starred_repos.csv
+CSV_STATUS=$?
+if [ "$CSV_STATUS" -eq 1 ]; then
+  printf '\npre-commit: starred_repos.csv has unstaged changes.\n\n' >&2
+  printf 'The gate checks the CSV that is staged, but check_public.py reads the\n' >&2
+  printf 'working-tree copy, and the two have to be the same file. Stage the whole\n' >&2
+  printf 'file or stash the rest, then commit again:\n\n' >&2
+  printf '  git add starred_repos.csv\n\n' >&2
+  exit 1
+fi
+if [ "$CSV_STATUS" -gt 1 ]; then
+  refuse "git diff failed on starred_repos.csv."
+fi
+
+# --- 3. Rebuild the staged tree in a scratch copy. ---------------------------
+
+SCRATCH="$(mktemp -d "${TMPDIR:-/tmp}/agentic-tools-pre-commit.XXXXXX")" \
+  || refuse "cannot create a scratch directory."
+
+git checkout-index --all --prefix="$SCRATCH/" \
+  || refuse "cannot materialise the index into $SCRATCH."
+
+if ! python3 "$SCRATCH/scripts/build.py"; then
+  refuse "scripts/build.py failed on the staged tree. The message above is the generator's own. Your working tree was not touched."
+fi
+
+# --- 4. Refuse a staged derived file that disagrees with the generator. ------
+
+DRIFTED=""
+for DERIVED in "${DERIVED_PATHS[@]}"; do
+  if [ ! -f "$SCRATCH/$DERIVED" ]; then
+    DRIFTED="$DRIFTED $DERIVED"
+    continue
+  fi
+  if ! cmp -s <(git show ":$DERIVED" 2>/dev/null) "$SCRATCH/$DERIVED"; then
+    DRIFTED="$DRIFTED $DERIVED"
+  fi
+done
+
+if [ -n "$DRIFTED" ]; then
+  printf '\npre-commit: the staged generated files disagree with starred_repos.csv.\n\n' >&2
+  for DERIVED in $DRIFTED; do
+    printf '  %s\n' "$DERIVED" >&2
+    git diff --no-index --stat <(git show ":$DERIVED" 2>/dev/null) "$SCRATCH/$DERIVED" >&2 || true
+  done
+  printf '\nRegenerate them from the staged CSV, stage the result, and commit again:\n\n' >&2
+  printf '  %s\n\n' "$REMEDY" >&2
+  exit 1
+fi
+
+# --- 5. Report, do not restore. ---------------------------------------------
+#
+# Nothing in the working tree was written to, so there is nothing to restore.
+# The scratch directory is removed by the EXIT trap on every path.
+
+# --- 6. Guard the visibility check on gh being usable, then run it. ----------
+
+GH_REASON=""
+if ! command -v gh >/dev/null 2>&1; then
+  GH_REASON="the gh CLI is not installed"
+elif ! gh auth status >/dev/null 2>&1; then
+  GH_REASON="gh is not signed in to any GitHub host"
+fi
+
+if [ -n "$GH_REASON" ]; then
+  printf 'pre-commit: skipping the visibility check: %s.\n' "$GH_REASON" >&2
+  printf 'pre-commit: the pull request check in .github/workflows/ci.yml enforces it there.\n' >&2
+else
+  printf 'pre-commit: checking that every repo in starred_repos.csv is public (about 15 seconds)...\n'
+  if ! python3 scripts/check_public.py; then
+    refuse "scripts/check_public.py failed. The rows it listed are the repos that are not public."
+  fi
+fi
+
+# --- 7. Exit 0. -------------------------------------------------------------
+
+exit 0

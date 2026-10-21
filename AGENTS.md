@@ -26,6 +26,40 @@ The scripts need Python 3.11 or later and the `gh` CLI, and use only the standar
 
 To add, remove or re-file repos, follow the `github-star-organizer` skill in `.claude/skills/github-star-organizer/SKILL.md`.
 
+### Pre-commit gate
+
+`.githooks/pre-commit` refuses a commit whose staged paths include the gated files. It runs `python3 scripts/build.py` and then `python3 scripts/check_public.py` before the commit is finalized, and refuses the commit when either exits non-zero. The scripts' output reaches the terminal unwrapped, so you read the same messages you would see on a pull request. `build.py` runs against a scratch copy of the index rather than against your working tree, and the visibility check reads the same staged CSV, so a refused commit leaves your working tree exactly as you left it.
+
+Enable the gate once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+That one line is the whole enablement cost. A bare clone runs no repository-controlled hook, and no candidate mechanism meets a literal zero-command bar, so the honest bar is this single `git config` line — there is no installer, no downloaded binary and no new dependency.
+
+The gate fires when the staged paths include any of:
+
+- `starred_repos.csv`
+- `starred_repos.toml`
+- `starred_repos.json`
+- `assets/readme/hero.svg`
+- `assets/readme/lists.svg`
+- `scripts/build.py`
+- `scripts/check_public.py`
+
+That list mirrors the `GATED_PATHS` array in `.githooks/pre-commit`; change one and you must change the other.
+
+That list is the trigger set. `README.md` is compared for drift whenever the gate fires for one of those paths, but it is not itself a trigger, so a commit that stages only `README.md` invokes neither script.
+
+The cost is about 0.1s for `build.py` and about 15s for `check_public.py` on the current 344-repo CSV, and it is paid only by commits that touch the gated files. A documentation-only commit invokes neither script.
+
+If `gh` is not authenticated the gate skips the visibility check with a notice on stderr, and the rest of the gate still runs.
+
+`.github/workflows/ci.yml` is the backstop: pull requests are gated whether or not you have enabled the local hook.
+
+`build.py` imports `tomllib`, so it needs Python 3.11 or later — the same interpreter requirement as the commands above, which the hook inherits. On an older interpreter the hook fails with a `ModuleNotFoundError` from `build.py` rather than failing later on the visibility check.
+
 ## Rules
 
 - Never publish a private or internal repo. Do not add rows to the CSV by hand, and run `scripts/check_public.py` before opening a pull request that changes the data.
