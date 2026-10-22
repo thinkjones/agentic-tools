@@ -1,26 +1,32 @@
-# PR-triggered publish gate for agentic-tools. Runs scripts/build.py (TOML
-# round-trip) and scripts/check_public.py (visibility) on every non-draft pull
-# request so a private or otherwise non-public repository addition is caught
-# before it reaches main. The Monday refresh-stats.yml schedule still owns the
-# push-to-main side; this workflow only covers PRs.
-name: PR publish gate
+# Publish gate for agentic-tools. Runs the unit tests, the build (TOML
+# round-trip), the generated-file drift check and the visibility check on
+# every non-draft pull request, and again on every push to main, so a
+# private or otherwise non-public repository addition is caught before it
+# reaches main and on main itself.
+#
+# The daily refresh-stats.yml schedule owns the data refresh; this workflow
+# only checks. The job name is the status check context that branch
+# protection requires, so it is stable: "Validate CSV + check public".
+name: Publish gate
 
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
 
 permissions:
   contents: read
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   validate:
     name: Validate CSV + check public
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -39,8 +45,24 @@ jobs:
           echo "$GH_TOKEN" | gh auth login --with-token \
             || echo "::warning::gh auth login did not resolve the token owner; gh api will use the GH_TOKEN environment variable"
 
+      - name: Unit tests
+        run: python3 scripts/run_tests.py
+
       - name: Build (TOML round-trip)
         run: python3 scripts/build.py
+
+      - name: Generated files are in sync with the CSV
+        run: |
+          # git status, not git diff: a generated file that this commit deletes
+          # is recreated by the build as an untracked file, which git diff
+          # ignores and git status reports.
+          STATUS="$(git status --porcelain --untracked-files=all -- starred_repos.toml starred_repos.json assets/readme/hero.svg assets/readme/lists.svg README.md)"
+          if [ -n "$STATUS" ]; then
+            printf '%s\n' "$STATUS"
+            git diff --stat -- starred_repos.toml starred_repos.json assets/readme/hero.svg assets/readme/lists.svg README.md || true
+            echo "::error::The generated files disagree with starred_repos.csv. Run 'python3 scripts/build.py' and commit the result."
+            exit 1
+          fi
 
       - name: Check every repo is public
         run: python3 scripts/check_public.py

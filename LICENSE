@@ -1,0 +1,13 @@
+PLACEHOLDER — this repository's licence has not been chosen yet.
+
+There is no licence grant in this file. Until the maintainer picks a licence and
+replaces this file with the full licence text, this repository is not licensed
+for use, redistribution or modification.
+
+To be explicit about one thing that is easy to misread: the line
+`license = "MIT"` in the TOML sample in README.md is a data field describing a
+third-party repository that this tool lists. It is not this repository's
+licence, and it does not grant anything here.
+
+The maintainer will replace this file with the chosen licence. If you want to
+contribute before that happens, please open an issue and ask.
