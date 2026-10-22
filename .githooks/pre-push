@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+#
+# Pre-push gate for agentic-tools.
+#
+# Two jobs:
+#
+#   1. Refuse a direct push to main. main is protected on GitHub, so this
+#      only moves the rejection earlier and gives a clearer message. Every
+#      change lands through a pull request; merging to main publishes the
+#      site.
+#
+#   2. Run the repository gate against the tree that is being pushed, so a
+#      push that was made with the commit gate bypassed is still caught.
+#
+# The gate itself lives in .githooks/gate.sh, which .githooks/pre-commit
+# also uses.
+#
+# Enable it per clone with either of:
+#
+#   git clone --config core.hooksPath=.githooks <url>   # at clone time
+#   python3 scripts/setup_hooks.py                       # for an existing clone
+
+set -uo pipefail
+
+REMOTE_NAME="${1:-origin}"
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+if [ -z "$ROOT" ] || [ ! -d "$ROOT" ]; then
+  printf '\npre-push: not inside a git working tree.\n' >&2
+  exit 1
+fi
+cd "$ROOT" || {
+  printf '\npre-push: cannot enter the repository root at %s.\n' "$ROOT" >&2
+  exit 1
+}
+
+# --- 1. Refuse a direct push to main. ---------------------------------------
+
+TREES=""
+while IFS=' ' read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
+  [ -n "${REMOTE_REF:-}" ] || continue
+
+  if [ "$REMOTE_REF" = "refs/heads/main" ]; then
+    printf '\npre-push: refusing to push to main.\n\n' >&2
+    printf 'main is protected: every change lands through a pull request, and merging\n' >&2
+    printf 'to main publishes the site. Push a branch and open a pull request instead:\n\n' >&2
+    printf '  git switch -c <branch>\n' >&2
+    printf '  git push -u %s <branch>\n\n' "$REMOTE_NAME" >&2
+    printf 'To bypass this deliberately, use --no-verify.\n' >&2
+    exit 1
+  fi
+
+  # A deletion carries no commit to check.
+  case "${LOCAL_SHA:-}" in
+    "" | 0000000000000000000000000000000000000000) continue ;;
+  esac
+  case " $TREES " in
+    *" $LOCAL_SHA "*) continue ;;
+  esac
+  TREES="$TREES $LOCAL_SHA"
+done
+
+# --- 2. Run the gate against each tree being pushed. ------------------------
+
+if [ -z "$TREES" ]; then
+  exit 0
+fi
+
+for TREE in $TREES; do
+  GATE_LABEL="pre-push" "$ROOT/.githooks/gate.sh" --tree "$TREE" || exit 1
+done
+
+exit 0

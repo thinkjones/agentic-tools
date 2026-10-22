@@ -19,7 +19,7 @@ or in several. Change lists with a decisions file:
 
 --refresh updates the stats of the repos already in the CSV and keeps their
 lists. It reads no stars or lists, so it works with any token, such as the
-GitHub Actions token used by the weekly refresh workflow.
+GitHub Actions token used by the daily refresh workflow.
 
 Needs Python 3.11+ and the gh CLI, signed in.
 """

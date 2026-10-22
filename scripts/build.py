@@ -60,6 +60,10 @@ SERIF = "'Source Serif 4', Georgia, 'Times New Roman', serif"
 MONO = "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 
 
+class BuildError(Exception):
+    """A build invariant was violated, so the generated output cannot be trusted."""
+
+
 def load():
     with CSV_PATH.open(encoding="utf-8-sig", newline="") as f:
         rows = list(csv.DictReader(f))
@@ -126,11 +130,15 @@ def write_toml(repos):
     path.write_text("\n".join(out) + "\n", encoding="utf-8")
 
     # Round-trip: the TOML must parse back to exactly what the CSV held.
-    parsed = tomllib.loads(path.read_text(encoding="utf-8"))["repos"]
+    try:
+        parsed = tomllib.loads(path.read_text(encoding="utf-8"))["repos"]
+    except tomllib.TOMLDecodeError as exc:
+        raise BuildError(f"starred_repos.toml is not valid TOML: {exc}") from exc
     for item in parsed:
         for key in DATE_FIELDS & item.keys():
             item[key] = item[key].isoformat()
-    assert parsed == repos, "starred_repos.toml does not round-trip to the CSV"
+    if parsed != repos:
+        raise BuildError("starred_repos.toml does not round-trip to the CSV")
 
 
 def write_json(repos):
@@ -328,7 +336,8 @@ def write_readme(repos, groups):
     for name, block in readme_blocks(repos, groups).items():
         pattern = re.compile(rf"(<!-- {name}:start -->\n).*?(<!-- {name}:end -->)", re.S)
         text, n = pattern.subn(lambda m: m.group(1) + block + "\n" + m.group(2), text)
-        assert n == 1, f"README.md is missing the {name} markers"
+        if n != 1:
+            raise BuildError(f"README.md is missing the {name} markers")
     path.write_text(text, encoding="utf-8")
 
 

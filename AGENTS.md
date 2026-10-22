@@ -8,7 +8,8 @@ This repo publishes a curated list of GitHub repos for building software with AI
 - `scripts/build.py` generates everything else from the CSV: `starred_repos.toml`, `starred_repos.json`, the charts in `assets/readme/`, and the blocks in `README.md` between `<!-- name:start -->` and `<!-- name:end -->` markers.
 - `index.html` is a single hand-written file with no build step. It loads `starred_repos.json` in the browser.
 - `scripts/organize_stars.py` uploads the lists to the maintainer's GitHub Lists. `scripts/sync_repo_meta.py` sets the repo description and topics from `.github/repo.toml`.
-- `.github/workflows/refresh-stats.yml` runs `export_stars.py --refresh` and the build every Monday and opens a `refresh-stats` pull request. It only updates stats and drops repos that are no longer public; it never adds or re-files repos.
+- `.github/workflows/refresh-stats.yml` runs `export_stars.py --refresh` and the build every day and opens a `refresh-stats` pull request. It only updates stats and drops repos that are no longer public; it never adds or re-files repos.
+- `tests/` holds the unit tests for the scripts, and `scripts/run_tests.py` runs them. It fails when it collects no tests, because a suite that runs nothing and reports success is worse than no suite.
 - `.gh-stars-organizer/` is git-ignored scratch (decisions, cache, list backups).
 
 ## Commands
@@ -17,29 +18,35 @@ This repo publishes a curated list of GitHub repos for building software with AI
 python3 scripts/export_stars.py        # GitHub stars -> starred_repos.csv
 python3 scripts/build.py               # CSV -> TOML, JSON, charts, README blocks
 python3 scripts/check_public.py        # fail if any listed repo is not public
+python3 scripts/run_tests.py           # run the unit tests
+python3 scripts/setup_hooks.py         # wire this clone's git hooks
 python3 scripts/organize_stars.py      # dry run of the GitHub Lists upload
 python3 scripts/sync_repo_meta.py      # dry run of the repo description and topics
 python3 -m http.server                 # preview the site at http://localhost:8000
 ```
 
-The scripts need Python 3.11 or later and the `gh` CLI, and use only the standard library. There is no test suite: the build asserts that the TOML round-trips to the CSV, and `check_public.py` is the gate before publishing.
+The scripts need Python 3.11 or later and the `gh` CLI, and use only the standard library. The tests use the standard library alone, so `python3 scripts/run_tests.py` needs nothing installed.
 
 To add, remove or re-file repos, follow the `github-star-organizer` skill in `.claude/skills/github-star-organizer/SKILL.md`.
 
-### Pre-commit gate
+### The gate
 
-`.githooks/pre-commit` refuses a commit whose staged paths include the gated files. It runs `python3 scripts/build.py` and then `python3 scripts/check_public.py` before the commit is finalized, and refuses the commit when either exits non-zero. The scripts' output reaches the terminal unwrapped, so you read the same messages you would see on a pull request. `build.py` runs against a scratch copy of the index rather than against your working tree, and the visibility check reads the same staged CSV, so a refused commit leaves your working tree exactly as you left it.
+The repository has a gate that checks the data before it can be committed or pushed. The gate itself lives in `.githooks/gate.sh`, and two hooks use it:
 
-Enable the gate once per clone:
+- `.githooks/pre-commit` runs the gate against the staged tree, but only when a gated path is staged. A commit that stages none of them is not intercepted.
+- `.githooks/pre-push` refuses a direct push to `main`, and runs the gate against the tree being pushed, so a push that was made with the commit gate bypassed is still caught.
 
-```bash
-git config core.hooksPath .githooks
-```
+The gate runs `scripts/build.py` against a scratch copy of the tree under test, so the working tree is never written to, and refuses when the generated files in that tree disagree with the generator. It then runs the unit tests and `scripts/check_public.py`, both against the same scratch copy, so every check sees exactly the tree that is about to be committed or pushed.
 
-That one line is the whole enablement cost. A bare clone runs no repository-controlled hook, and no candidate mechanism meets a literal zero-command bar, so the honest bar is this single `git config` line — there is no installer, no downloaded binary and no new dependency.
+The gate refuses a commit whose working-tree `starred_repos.csv` differs from the staged one. The gate checks the CSV that is staged, and the rebuild it suggests on failure runs against the working tree, so the two have to be the same file: if they differ, the remedy rebuilds from a different CSV and the gate refuses again. Stage the whole CSV or stash the rest.
+
+Every check fails closed. If the `gh` CLI is missing or signed out, or the API call fails, `scripts/check_public.py` exits non-zero and the gate refuses. A gate that passes because it could not run is worse than no gate, because it looks like evidence. The scripts' output reaches the terminal unwrapped, so you read the same messages you would see on a pull request.
+
+The one exception is a tree that predates the gate's own configuration: without `scripts/gated_paths.py` there is no trigger set to check against, so the gate says so and lets the commit through. CI still checks everything, and `tests/test_gated_paths.py` fails if the configuration is deleted.
 
 The gate fires when the staged paths include any of:
 
+<!-- gated-paths:start -->
 - `starred_repos.csv`
 - `starred_repos.toml`
 - `starred_repos.json`
@@ -47,18 +54,35 @@ The gate fires when the staged paths include any of:
 - `assets/readme/lists.svg`
 - `scripts/build.py`
 - `scripts/check_public.py`
+- `scripts/gated_paths.py`
+- `tests/`
+<!-- gated-paths:end -->
 
-That list mirrors the `GATED_PATHS` array in `.githooks/pre-commit`; change one and you must change the other.
+That list has exactly one home, `scripts/gated_paths.py`: the hooks read it from there, and `tests/test_gated_paths.py` fails when AGENTS.md stops documenting the same set. Change it there and nowhere else. `tests/` is a directory, so any change under it fires the gate.
 
 That list is the trigger set. `README.md` is compared for drift whenever the gate fires for one of those paths, but it is not itself a trigger, so a commit that stages only `README.md` invokes neither script.
 
-The cost is about 0.1s for `build.py` and about 15s for `check_public.py` on the current 344-repo CSV, and it is paid only by commits that touch the gated files. A documentation-only commit invokes neither script.
+The cost is about 0.1s for `build.py`, about 0.2s for the unit tests and about 15s for `check_public.py` on the current 344-repo CSV, and it is paid only by commits that touch the gated files. A documentation-only commit invokes neither script.
 
-If `gh` is not authenticated the gate skips the visibility check with a notice on stderr, and the rest of the gate still runs.
-
-`.github/workflows/ci.yml` is the backstop: pull requests are gated whether or not you have enabled the local hook.
+`.github/workflows/ci.yml` is the backstop: pull requests and pushes to `main` are gated whether or not you have enabled the local hook.
 
 `build.py` imports `tomllib`, so it needs Python 3.11 or later — the same interpreter requirement as the commands above, which the hook inherits. On an older interpreter the hook fails with a `ModuleNotFoundError` from `build.py` rather than failing later on the visibility check.
+
+### Enabling the gate
+
+The gate is tracked in `.githooks/`, so each clone needs one setting to point git at it. For a new clone the setting is made as the clone is created, with no second command:
+
+```bash
+git clone --config core.hooksPath=.githooks https://github.com/thinkjones/agentic-tools.git
+```
+
+For a clone that already exists:
+
+```bash
+python3 scripts/setup_hooks.py
+```
+
+The script is idempotent and prints what it did. `python3 scripts/setup_hooks.py --check` reports the wiring without changing it. A clone with no wiring is not unguarded: CI gates every pull request and every push to `main` regardless.
 
 ## Rules
 
@@ -68,6 +92,7 @@ If `gh` is not authenticated the gate skips the visibility check with a notice o
 - Anything that changes the maintainer's GitHub account (starring repos, `organize_stars.py --apply`, `sync_repo_meta.py --apply`) needs their approval first. The dry runs are always safe.
 - Keep the scripts standard-library only and the site dependency-free.
 - Do not hard-wrap prose in markdown files. Write each paragraph and list item on one line.
+- `LICENSE` is a placeholder: the licence for this repository has not been chosen yet. Do not copy the `license = "MIT"` line out of the TOML sample in `README.md` — that field describes a listed third-party repo, not this repo.
 
 ## Design
 

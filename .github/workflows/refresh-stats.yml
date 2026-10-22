@@ -1,4 +1,4 @@
-# Every Monday, refresh the stars, forks, activity and releases of the listed
+# Every day, refresh the stars, forks, activity and releases of the listed
 # repos, rebuild the README, charts and site data, and open a pull request with
 # the result (main is protected). Merging it publishes the site. Lists are left
 # as they are; new stars are still filed with the github-star-organizer skill.
@@ -6,7 +6,7 @@ name: Refresh stats
 
 on:
   schedule:
-    - cron: "17 6 * * 1"
+    - cron: "17 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -50,7 +50,7 @@ jobs:
           git commit -qam "Refresh repo stats ($today)"
           git push -qf origin "$BRANCH"
           {
-            echo "Weekly refresh of stars, forks, activity and releases, as of $today. Lists are unchanged. Merging publishes the site."
+            echo "Daily refresh of stars, forks, activity and releases, as of $today. Lists are unchanged. Merging publishes the site."
             echo
             echo '```'
             cat "$RUNNER_TEMP/export.txt"
