@@ -53,8 +53,13 @@ jobs:
 
       - name: Generated files are in sync with the CSV
         run: |
-          if ! git diff --quiet -- starred_repos.toml starred_repos.json assets/readme/hero.svg assets/readme/lists.svg README.md; then
-            git diff --stat -- starred_repos.toml starred_repos.json assets/readme/hero.svg assets/readme/lists.svg README.md
+          # git status, not git diff: a generated file that this commit deletes
+          # is recreated by the build as an untracked file, which git diff
+          # ignores and git status reports.
+          STATUS="$(git status --porcelain --untracked-files=all -- starred_repos.toml starred_repos.json assets/readme/hero.svg assets/readme/lists.svg README.md)"
+          if [ -n "$STATUS" ]; then
+            printf '%s\n' "$STATUS"
+            git diff --stat -- starred_repos.toml starred_repos.json assets/readme/hero.svg assets/readme/lists.svg README.md || true
             echo "::error::The generated files disagree with starred_repos.csv. Run 'python3 scripts/build.py' and commit the result."
             exit 1
           fi

@@ -61,13 +61,34 @@ class GatedPathsTests(unittest.TestCase):
     def test_filter_does_not_match_a_prefix_that_is_not_a_directory(self):
         self.assertEqual(gated_paths.filter_gated(["testsfoo/bar.py"]), [])
 
-    def test_the_hooks_do_not_hardcode_the_trigger_set(self):
+    def test_the_hooks_do_not_carry_the_trigger_set(self):
+        """The trigger set has one home. A hook may name a path it has to talk
+        about; it may not carry the list."""
+        paths_a_hook_may_name = {
+            "starred_repos.csv",  # the half-staged CSV guard
+            "scripts/build.py",  # the generator the gate runs
+            "scripts/check_public.py",  # the visibility check the gate runs
+            "scripts/gated_paths.py",  # the gate's own configuration
+            "scripts/run_tests.py",  # the test runner the gate runs
+        }
+        literals = [path for path in gated_paths.GATED_PATHS if not path.endswith("/")]
         hooks = ROOT / ".githooks"
+        found = 0
         for hook in sorted(hooks.iterdir()):
+            if not hook.is_file():
+                continue
             if hook.suffix != ".sh" and hook.name not in ("pre-commit", "pre-push"):
                 continue
+            found += 1
             text = hook.read_text(encoding="utf-8")
-            self.assertNotIn("GATED_PATHS=(", text, f"{hook.name} hardcodes the trigger set")
+            for path in literals:
+                if path in text and path not in paths_a_hook_may_name:
+                    self.fail(f"{hook.name} names the gated path {path}; the trigger set lives in scripts/gated_paths.py")
+        self.assertGreater(found, 0, "no hook was found to check")
+
+    def test_the_hooks_read_the_trigger_set_from_the_configuration(self):
+        gate = ROOT / ".githooks/gate.sh"
+        self.assertIn("gated_paths.py", gate.read_text(encoding="utf-8"))
 
     def test_check_agents_md_reports_a_stale_document(self):
         with tempfile.TemporaryDirectory() as tmp:

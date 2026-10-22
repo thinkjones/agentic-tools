@@ -23,8 +23,9 @@ AGENTS_MD = ROOT / "AGENTS.md"
 # (see DERIVED_PATHS) rather than used as a trigger.
 #
 # An entry ending in "/" is a directory: every staged path under it fires the
-# gate. `scripts/gated_paths.py` is in the list because changing the trigger
-# set has to be gated by the trigger set.
+# gate. `.githooks/`, `scripts/gated_paths.py` and `scripts/run_tests.py` are
+# in the list because changing or removing them changes what the gate does,
+# and removing them would switch the gate or the tests off.
 GATED_PATHS = (
     "starred_repos.csv",
     "starred_repos.toml",
@@ -34,7 +35,9 @@ GATED_PATHS = (
     "scripts/build.py",
     "scripts/check_public.py",
     "scripts/gated_paths.py",
+    "scripts/run_tests.py",
     "tests/",
+    ".githooks/",
 )
 
 # Files the generator owns, compared against the generator's output on every

@@ -36,13 +36,13 @@ The repository has a gate that checks the data before it can be committed or pus
 - `.githooks/pre-commit` runs the gate against the staged tree, but only when a gated path is staged. A commit that stages none of them is not intercepted.
 - `.githooks/pre-push` refuses a direct push to `main`, and runs the gate against the tree being pushed, so a push that was made with the commit gate bypassed is still caught.
 
-The gate runs `scripts/build.py` against a scratch copy of the tree under test, so the working tree is never written to, and refuses when the generated files in that tree disagree with the generator. It then runs the unit tests and `scripts/check_public.py`, both against the same scratch copy, so every check sees exactly the tree that is about to be committed or pushed.
+The gate runs `scripts/build.py` against a scratch copy of the tree under test, so the working tree is never written to, and refuses when the generated files in that tree disagree with the generator. It then runs the unit tests and `scripts/check_public.py`, both against the same scratch copy, so every check sees exactly the tree that is about to be committed or pushed. Everything the gate reads — the trigger set, the list of generated files, the scripts themselves — comes from that tree, never from the working tree.
 
 The gate refuses a commit whose working-tree `starred_repos.csv` differs from the staged one. The gate checks the CSV that is staged, and the rebuild it suggests on failure runs against the working tree, so the two have to be the same file: if they differ, the remedy rebuilds from a different CSV and the gate refuses again. Stage the whole CSV or stash the rest.
 
 Every check fails closed. If the `gh` CLI is missing or signed out, or the API call fails, `scripts/check_public.py` exits non-zero and the gate refuses. A gate that passes because it could not run is worse than no gate, because it looks like evidence. The scripts' output reaches the terminal unwrapped, so you read the same messages you would see on a pull request.
 
-The one exception is a tree that predates the gate's own configuration: without `scripts/gated_paths.py` there is no trigger set to check against, so the gate says so and lets the commit through. CI still checks everything, and `tests/test_gated_paths.py` fails if the configuration is deleted.
+The one exception is a tree that predates the gate's own configuration: without `scripts/gated_paths.py` there is no trigger set to check against, so the gate says so and lets the commit through. A commit that *removes* that configuration, or the test runner, is refused instead, because it would switch the gate or the tests off. CI catches either case, since the test suite imports the configuration.
 
 The gate fires when the staged paths include any of:
 
@@ -55,14 +55,16 @@ The gate fires when the staged paths include any of:
 - `scripts/build.py`
 - `scripts/check_public.py`
 - `scripts/gated_paths.py`
+- `scripts/run_tests.py`
 - `tests/`
+- `.githooks/`
 <!-- gated-paths:end -->
 
-That list has exactly one home, `scripts/gated_paths.py`: the hooks read it from there, and `tests/test_gated_paths.py` fails when AGENTS.md stops documenting the same set. Change it there and nowhere else. `tests/` is a directory, so any change under it fires the gate.
+That list has exactly one home, `scripts/gated_paths.py`: the hooks read it from there, and `tests/test_gated_paths.py` fails when AGENTS.md stops documenting the same set. Change it there and nowhere else. `tests/` and `.githooks/` are directories, so any change under them fires the gate.
 
 That list is the trigger set. `README.md` is compared for drift whenever the gate fires for one of those paths, but it is not itself a trigger, so a commit that stages only `README.md` invokes neither script.
 
-The cost is about 0.1s for `build.py`, about 0.2s for the unit tests and about 15s for `check_public.py` on the current 344-repo CSV, and it is paid only by commits that touch the gated files. A documentation-only commit invokes neither script.
+The cost is about 0.1s for `build.py`, about 5s for the unit tests and about 15s for `check_public.py` on the current 344-repo CSV, and it is paid only by commits that touch the gated files. A documentation-only commit invokes neither script.
 
 `.github/workflows/ci.yml` is the backstop: pull requests and pushes to `main` are gated whether or not you have enabled the local hook.
 
