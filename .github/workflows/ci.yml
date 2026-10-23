@@ -14,6 +14,14 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
+  # refresh-stats.yml opens its pull request with GITHUB_TOKEN. GitHub does
+  # create the pull_request run for such a pull request, but it parks it as
+  # action_required and never executes it, so the required check never reports
+  # and the pull request is blocked forever. workflow_dispatch is the one
+  # event GITHUB_TOKEN still starts, so refresh-stats.yml dispatches this gate
+  # against the branch it pushed: the check run lands on the branch head,
+  # which is the pull request's head commit.
+  workflow_dispatch:
 
 permissions:
   contents: read

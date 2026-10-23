@@ -10,6 +10,8 @@ on:
   workflow_dispatch:
 
 permissions:
+  # actions: write is what lets this workflow dispatch ci.yml below.
+  actions: write
   contents: write
   pull-requests: write
 
@@ -38,6 +40,15 @@ jobs:
         run: python3 scripts/check_public.py
 
       - name: Open or update the pull request
+        env:
+          # REFRESH_STATS_TOKEN is a personal access token with contents and
+          # pull-requests write on this repository. With one, the pull request
+          # is opened by a real account, GitHub starts ci.yml for the
+          # pull_request event on its own, and the required check reports
+          # without help. Without one the pull request is opened by
+          # GITHUB_TOKEN and the gate has to be dispatched by hand below.
+          GH_TOKEN: ${{ secrets.REFRESH_STATS_TOKEN || github.token }}
+          DEFAULT_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet; then
             echo "Nothing changed."
@@ -60,4 +71,12 @@ jobs:
             gh pr create --head "$BRANCH" --title "Refresh repo stats" --body-file "$RUNNER_TEMP/body.md"
           else
             gh pr edit "$BRANCH" --body-file "$RUNNER_TEMP/body.md"
+          fi
+          if [ "$GH_TOKEN" = "$DEFAULT_TOKEN" ]; then
+            # GITHUB_TOKEN opened the pull request, so the pull_request event
+            # it raised is parked as action_required and ci.yml never runs for
+            # it. Dispatch the gate instead: workflow_dispatch is the event
+            # GITHUB_TOKEN still starts, and the check run it produces lands
+            # on the branch head, which is the pull request's head commit.
+            gh workflow run ci.yml --ref "$BRANCH"
           fi
