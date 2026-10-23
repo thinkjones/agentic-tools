@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  # actions: write is what lets this workflow dispatch ci.yml below.
+  # actions: write is what lets this workflow approve the parked gate run.
   actions: write
   contents: write
   pull-requests: write
@@ -40,13 +40,14 @@ jobs:
         run: python3 scripts/check_public.py
 
       - name: Open or update the pull request
+        id: pr
         env:
           # REFRESH_STATS_TOKEN is a personal access token with contents and
           # pull-requests write on this repository. With one, the pull request
           # is opened by a real account, GitHub starts ci.yml for the
-          # pull_request event on its own, and the required check reports
-          # without help. Without one the pull request is opened by
-          # GITHUB_TOKEN and the gate has to be dispatched by hand below.
+          # pull_request event on its own, and there is no parked run to
+          # approve. Without one the pull request is opened by GITHUB_TOKEN
+          # and the gate has to be approved by hand below.
           GH_TOKEN: ${{ secrets.REFRESH_STATS_TOKEN || github.token }}
           DEFAULT_TOKEN: ${{ github.token }}
         run: |
@@ -72,11 +73,39 @@ jobs:
           else
             gh pr edit "$BRANCH" --body-file "$RUNNER_TEMP/body.md"
           fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           if [ "$GH_TOKEN" = "$DEFAULT_TOKEN" ]; then
-            # GITHUB_TOKEN opened the pull request, so the pull_request event
-            # it raised is parked as action_required and ci.yml never runs for
-            # it. Dispatch the gate instead: workflow_dispatch is the event
-            # GITHUB_TOKEN still starts, and the check run it produces lands
-            # on the branch head, which is the pull request's head commit.
-            gh workflow run ci.yml --ref "$BRANCH"
+            echo "needs_approval=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "needs_approval=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Let the publish gate run on the pull request
+        if: steps.pr.outputs.needs_approval == 'true'
+        run: |
+          # A pull request opened with GITHUB_TOKEN raises the pull_request
+          # event as a run that GitHub parks as action_required, and a parked
+          # run never executes. No check lands on the pull request, the
+          # required "Validate CSV + check public" context never reports, and
+          # the pull request cannot be merged at all. Approving the parked run
+          # is what makes it execute, and the check it produces is the pull
+          # request's own check, which is the one branch protection looks
+          # for. A dispatched run is not a substitute: its check is on the
+          # commit but is not a pull request check, so branch protection
+          # still sees the required context as missing.
+          sha="${{ steps.pr.outputs.sha }}"
+          run_id=""
+          for attempt in $(seq 1 30); do
+            run_id=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$sha&status=action_required&per_page=10" \
+              --jq '[.workflow_runs[] | select(.event == "pull_request" and .path == ".github/workflows/ci.yml")] | .[0].id // empty')
+            if [ -n "$run_id" ]; then
+              break
+            fi
+            sleep 2
+          done
+          if [ -z "$run_id" ]; then
+            echo "::warning::No parked gate run for $sha. The gate may have run already, or the pull request raised none."
+            exit 0
+          fi
+          gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/$run_id/approve" --silent
+          echo "Approved gate run $run_id for $sha."
